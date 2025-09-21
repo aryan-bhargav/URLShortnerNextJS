@@ -7,7 +7,6 @@ export async function GET() {
             orderBy: {createdAt:'desc'},
             take: 5
         })
-
         return NextResponse.json(urls);
     } catch (error) {
         console.error("Error Fetching Urls",error);
