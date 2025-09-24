@@ -67,7 +67,7 @@ const UrlList = () => {
                 className="text-blue-600 hover:underline break-all"
                 target="_blank"
               >
-                {shortenUrlLinkGenerator(url.shortCode) || url.originalUrl}
+                {url.shortCode || url.originalUrl}
               </Link>
 
               <div className="flex items-center space-x-3">
