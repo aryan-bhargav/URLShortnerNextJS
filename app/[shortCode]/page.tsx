@@ -6,20 +6,16 @@ interface RedirectPageProps {
 }
 
 const RedirectPage = async ({ params }: RedirectPageProps) => {
-  const { shortCode } = await params;
+  const { shortCode } = params; // removed await
 
-  const url = await prisma.url.findUnique({
+  const url = await prisma.url.update({
     where: { shortCode },
-  });
+    data: { visits: { increment: 1 } },
+  }).catch(() => null);
 
   if (!url) {
     notFound();
   }
-  
-  await prisma.url.update({
-    where: { id: url.id },
-    data: { visits: { increment: 1 } },
-  });
 
   redirect(url.originalUrl);
 };
