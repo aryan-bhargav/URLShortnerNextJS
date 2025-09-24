@@ -9,7 +9,6 @@ interface UrlI {
   id: string;
   shortCode: string;
   originalUrl: string; 
-  shortUrl: string;    
   visits: number;   
 }
 
@@ -18,18 +17,19 @@ const UrlList = () => {
   const [copied, setCopied] = useState<boolean>(false);
   const [loading, setLoading] = useState(true);
 
-  const handleCopyUrl = (shortUrl:string) => {
-    navigator.clipboard.writeText(shortenUrlLinkGenerator(shortUrl)).then(()=>{
-      setCopied(true);
-      setTimeout(() => {
-        setCopied(false);
-      }, 3000);
-    })
-  }
+  // Ensure we remove trailing slash from env variable
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL?.replace(/\/$/, "");
 
-  const shortenUrlLinkGenerator=(shortCode:string)=>{
-    return `${process.env.NEXT_PUBLIC_BASE_URL}/${shortCode}`;
-  }
+  const shortenUrlLinkGenerator = (shortCode: string) => {
+    return `${baseUrl}/${shortCode}`;
+  };
+
+  const handleCopyUrl = (shortCode: string) => {
+    navigator.clipboard.writeText(shortenUrlLinkGenerator(shortCode)).then(() => {
+      setCopied(true);
+      setTimeout(() => setCopied(false), 3000);
+    });
+  };
 
   const fetchUrls = async () => {
     try {
@@ -77,7 +77,7 @@ const UrlList = () => {
                   className="text-gray-600 hover:text-blue-600"
                   onClick={() => handleCopyUrl(url.shortCode)}
                 >
-                  {(copied)? <CheckIcon/> : <CopyIcon className="w-4 h-4" />}
+                  {copied ? <CheckIcon /> : <CopyIcon className="w-4 h-4" />}
                 </Button>
                 <span className="flex items-center text-sm text-gray-500">
                   <EyeIcon className="w-4 h-4 mr-1" /> {url.visits ?? 0} views
