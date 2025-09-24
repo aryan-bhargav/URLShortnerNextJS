@@ -43,7 +43,7 @@ const RedirectPage = async ({ params }: RedirectPageProps) => {
 
   // 3️⃣ Store in Redis for future requests
   try {
-    await redis.set(shortCode, url.originalUrl, "EX", 60*30); // 0.5 hour TTL
+    await redis.set(shortCode, url.originalUrl, "EX", 60); // 0.5 minute TTL
     console.log(`[REDIS SET] ShortCode: ${shortCode} -> ${url.originalUrl}`);
   } catch (err) {
     console.error("[REDIS SET ERROR]", err);

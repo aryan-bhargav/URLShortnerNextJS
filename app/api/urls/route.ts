@@ -3,7 +3,7 @@ import redis from "@/lib/redis";
 import { NextResponse } from "next/server";
 
 const CACHE_KEY = "recent_urls";
-const CACHE_TTL = 60 * 5; // 5 minutes
+const CACHE_TTL = 30 ; // 30 seconds
 
 export async function GET() {
   try {
