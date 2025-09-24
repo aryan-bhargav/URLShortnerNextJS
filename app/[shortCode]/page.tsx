@@ -9,47 +9,52 @@ interface RedirectPageProps {
 const RedirectPage = async ({ params }: RedirectPageProps) => {
   const { shortCode } = params;
 
+  // 1️⃣ Try fetching URL metadata from Redis
   let cachedUrl: string | null = null;
-
-  // 1️⃣ Try fetching from Redis
   try {
     cachedUrl = await redis.get(shortCode);
-    if (cachedUrl) {
-      console.log(`[REDIS HIT] ShortCode: ${shortCode} -> ${cachedUrl}`);
-
-      // Increment visits in DB (keep source of truth consistent)
-      await prisma.url.update({
-        where: { shortCode },
-        data: { visits: { increment: 1 } },
-      }).catch(err => console.error("[DB INCR ERROR]", err));
-
-      redirect(cachedUrl);
-    } else {
-      console.log(`[REDIS MISS] ShortCode: ${shortCode}`);
-    }
   } catch (err) {
     console.error("[REDIS GET ERROR]", err);
   }
 
-  // 2️⃣ Cache miss → Update DB and increment visits
-  const url = await prisma.url.update({
-    where: { shortCode },
-    data: { visits: { increment: 1 } },
-  }).catch(() => null);
+  // 2️⃣ If cached, increment visits counter and redirect
+  if (cachedUrl) {
+    try {
+      await redis.incr(`visits:${shortCode}`);
+    } catch (err) {
+      console.error("[REDIS INCR ERROR]", err);
+    }
 
-  if (!url) {
-    notFound();
+    const urlData = JSON.parse(cachedUrl);
+    redirect(urlData.originalUrl);
   }
 
-  // 3️⃣ Store in Redis for future requests
+  // 3️⃣ Cache miss → fetch from DB
+  const url = await prisma.url.findUnique({ where: { shortCode } });
+  if (!url) notFound();
+
+  // 4️⃣ Increment visits counter in Redis
   try {
-    await redis.set(shortCode, url.originalUrl, "EX", 60*30); // 0.5 hour TTL
-    console.log(`[REDIS SET] ShortCode: ${shortCode} -> ${url.originalUrl}`);
+    await redis.incr(`visits:${shortCode}`);
+  } catch (err) {
+    console.error("[REDIS INCR ERROR]", err);
+  }
+
+  // 5️⃣ Cache URL metadata for next time
+  try {
+    await redis.set(
+      shortCode,
+      JSON.stringify({
+        id: url.id,
+        originalUrl: url.originalUrl,
+        shortCode: url.shortCode,
+        createdAt: url.createdAt,
+      }), "EX" , 60*60 // 1 hour TTL
+    );
   } catch (err) {
     console.error("[REDIS SET ERROR]", err);
   }
 
-  // 4️⃣ Redirect
   redirect(url.originalUrl);
 };
 
