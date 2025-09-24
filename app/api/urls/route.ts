@@ -10,19 +10,25 @@ export async function GET() {
     // 1️⃣ Check Redis cache first
     const cached = await redis.get(CACHE_KEY);
     if (cached) {
-      return NextResponse.json(JSON.parse(cached));
+      const parsed = JSON.parse(cached);
+      if (Array.isArray(parsed) && parsed.length > 0) {
+        return NextResponse.json(parsed);
+      }
     }
 
-    // 2️⃣ Fetch from Prisma if cache miss
+    // 2️⃣ Fetch from Prisma if cache miss or empty cache
     const urls = await prisma.url.findMany({
       orderBy: { createdAt: "desc" },
       take: 5,
     });
 
-    // 3️⃣ Store in Redis for next requests
-    await redis.set(CACHE_KEY, JSON.stringify(urls), "EX", CACHE_TTL);
+    // 3️⃣ Store in Redis only if we have data
+    if (urls.length > 0) {
+      await redis.set(CACHE_KEY, JSON.stringify(urls),"EX",CACHE_TTL);
+    }
 
     return NextResponse.json(urls);
+
   } catch (err: any) {
     if (err.code === "P2021") {
       console.error("Table Url does not exist:", err);
