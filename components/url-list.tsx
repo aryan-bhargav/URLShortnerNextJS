@@ -63,7 +63,7 @@ const UrlList = () => {
               className="flex items-center justify-between p-4 bg-gray-50 rounded-lg border border-gray-200 hover:shadow-sm transition"
             >
               <Link
-                href={shortenUrlLinkGenerator(url.shortCode)}
+                href={url.shortCode}
                 className="text-blue-600 hover:underline break-all"
                 target="_blank"
               >
