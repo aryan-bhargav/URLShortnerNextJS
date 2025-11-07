@@ -1,0 +1,36 @@
+version: "3.9"
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: next_app
+    restart: always
+    ports:
+      - "3000:3000"
+    environment:
+      NODE_ENV: production
+      DATABASE_URL: "prisma+postgres://accelerate.prisma-data.net/?api_key=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqd3RfaWQiOjEsInNlY3VyZV9rZXkiOiJza19yTXJ2WlhYYzJhSGV2NWV6M2k1WGMiLCJhcGlfa2V5IjoiMDFLNU5ZNllHMEVXRlo1MUdOQzdFMzNCNUIiLCJ0ZW5hbnRfaWQiOiJjNzdjMWNkNGUxYjI0ZWZjZmI5ZGFlMjFjZWU4YmU0MTc4MGFkNzljMzg1ZjFiNjIwMjc3NGI0YjQ5NDc0MWRlIiwiaW50ZXJuYWxfc2VjcmV0IjoiNDQ5NzI2NWEtMmU0Yy00NjU0LWIzY2MtMzM5YjEzNTg0NjcwIn0.kpttZB3r85o90nygWdipjtHqgDkfZfqoyTFi5DOhyPA"
+      DIRECT_URL: "postgresql://postgres:123456@db:5432/url-shortner"
+      NEXT_PUBLIC_BASE_URL: "http://localhost:3000"
+      REDIS_URL: "redis://default:pAHNYnxMJRM06lWmzwI3GXBXVDhSHw4c@redis-17783.crce182.ap-south-1-1.ec2.redns.redis-cloud.com:17783"
+    depends_on:
+      - db
+    command: ["npm", "run", "start"]
+
+  db:
+    image: postgres:16-alpine
+    container_name: postgres_db
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 123456
+      POSTGRES_DB: url-shortner
+    ports:
+      - "5432:5432"
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+
+volumes:
+  pg_data:
