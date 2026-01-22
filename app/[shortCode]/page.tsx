@@ -7,7 +7,7 @@ interface RedirectPageProps {
 }
 
 const RedirectPage = async ({ params }: RedirectPageProps) => {
-  const { shortCode } = params;
+  const { shortCode } = await params;
 
   let cachedUrl: string | null = null;
 

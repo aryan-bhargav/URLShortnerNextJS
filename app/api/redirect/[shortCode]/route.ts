@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/db";
 import redis from "@/lib/redis";
 import { rateLimit } from "@/lib/rateLimit";
@@ -44,48 +44,19 @@ async function incrementVisits(shortCode: string) {
   }
 }
 
-
 export async function GET(
-  req: Request,
-  { params }: { params: { shortCode: string } }
+  request: NextRequest,
+  { params }: { params: Promise<{ shortCode: string }> }
 ) {
-  const { shortCode } = params;
+  const { shortCode } = await params;
 
   try {
-    // 🚦 RATE LIMIT (IP-based)
-    const ip =
-      req.headers.get("x-forwarded-for") ??
-      req.headers.get("x-real-ip") ??
-      "unknown";
-
-    const allowed = await rateLimit(
-      `rl:redirect:${ip}`,
-      REDIRECT_LIMIT,
-      REDIRECT_WINDOW
-    );
-
-    if (!allowed) {
-      return NextResponse.json(
-        { message: "Too many requests" },
-        { status: 429 }
-      );
-    }
-
     const CACHE_KEY = `url:${shortCode}`;
 
-    // 1️⃣ Redis cache
+    // 1️⃣ Redis first
     const cached = await redis.get(CACHE_KEY);
     if (cached) {
-      const url: Url = JSON.parse(cached);
-
-      if (!isUrlValid(url)) {
-        return NextResponse.json(
-          { message: "Link expired or disabled" },
-          { status: 410 }
-        );
-      }
-
-      incrementVisits(shortCode); // non-blocking
+      const url = JSON.parse(cached);
       return NextResponse.redirect(url.originalUrl);
     }
 
@@ -94,28 +65,25 @@ export async function GET(
       where: { shortCode },
     });
 
-    if (!url) {
+    if (!url || !url.isActive) {
       return NextResponse.json(
-        { message: "Short URL not found" },
+        { message: "Short URL not found or inactive" },
         { status: 404 }
       );
     }
 
-    if (!isUrlValid(url)) {
-      return NextResponse.json(
-        { message: "Link expired or disabled" },
-        { status: 410 }
-      );
-    }
-
-    // 3️⃣ Cache result
+    // 3️⃣ Cache
     await redis.set(CACHE_KEY, JSON.stringify(url), "EX", CACHE_TTL);
 
-    incrementVisits(shortCode); // non-blocking
+    // 4️⃣ Increment visits (non-blocking)
+    prisma.url.update({
+      where: { shortCode },
+      data: { visits: { increment: 1 } },
+    }).catch(() => {});
+
     return NextResponse.redirect(url.originalUrl);
   } catch (error) {
     console.error("Redirect error:", error);
-
     return NextResponse.json(
       { message: "Internal server error" },
       { status: 500 }

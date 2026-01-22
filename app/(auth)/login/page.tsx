@@ -40,7 +40,8 @@ export default function LoginPage() {
   return (
     <main className="min-h-screen flex items-center justify-center px-6">
       {/* RIGHT LOGIN CARD */}
-      <div className="bg-zinc-900/90 backdrop-blur-xl rounded-t-sm p-8 md:p-10 shadow-[0_20px_60px_rgba(0,0,0,0.7)]">
+      <div className="w-full max-w-md bg-zinc-900/90 backdrop-blur-xl rounded-t-sm p-8 md:p-10 shadow-[0_20px_60px_rgba(0,0,0,0.7)]">
+
         {/* Logo */}
         <div className="flex items-center gap-2 mb-8">
           <div className="w-8 h-8 rounded-full bg-orange-500 flex items-center justify-center font-bold">
