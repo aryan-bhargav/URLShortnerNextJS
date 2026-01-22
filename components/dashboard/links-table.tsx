@@ -29,15 +29,16 @@ export default function LinksTable({ links, loading }: LinksTableProps) {
 
   return (
     <div className="glass rounded-xl overflow-hidden">
-      {/* Desktop header */}
-      <div className="hidden md:grid grid-cols-4 px-4 py-3 text-sm text-gray-400 border-b border-white/10">
-        <span>Short Link</span>
-        <span>Original URL</span>
-        <span>Clicks</span>
-        <span>Status</span>
+      {/* Desktop Header - Hidden on mobile, visible from md and above */}
+      <div className="hidden md:grid grid-cols-4 px-4 py-3 text-xs md:text-sm lg:text-base text-gray-400 border-b border-white/10 bg-white/5">
+        <span className="font-semibold">Short Link</span>
+        <span className="font-semibold">Original URL</span>
+        <span className="font-semibold">Clicks</span>
+        <span className="font-semibold">Status</span>
       </div>
 
-      <div>
+      {/* Mobile: Card-based layout | Desktop: Grid layout */}
+      <div className="divide-y divide-white/10">
         {links.map((link) => (
           <LinkRow key={link.id} link={link} />
         ))}

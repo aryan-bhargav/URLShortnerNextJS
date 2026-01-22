@@ -10,27 +10,17 @@ export default function StatsBar({ links }: StatsBarProps) {
   const activeLinks = links.filter((link) => link.isActive).length;
 
   return (
-    <div
-      className="
-        glass rounded-2xl p-5
-        grid grid-cols-1 sm:grid-cols-3 gap-4
-      "
-    >
-      <StatItem
-        label="Total Links"
-        value={totalLinks}
-        accent="cyan"
-      />
-      <StatItem
-        label="Active Links"
-        value={activeLinks}
-        accent="green"
-      />
-      <StatItem
-        label="Total Clicks"
-        value={totalClicks}
-        accent="blue"
-      />
+    <div className="glass rounded-2xl p-5 flex flex-col gap-4 sm:flex-row sm:gap-3 md:flex-col md:gap-3 lg:flex-row lg:gap-4 xl:gap-6">
+      {/* Mobile & SM: Stacked | MD: Vertical | LG+: Horizontal arrangement */}
+      <div className="flex flex-row gap-2 sm:flex-col sm:gap-3 md:flex-row md:gap-2 lg:flex-col lg:gap-3 xl:gap-4 flex-1">
+        <StatItem label="Total Links" value={totalLinks} accent="cyan" />
+        <StatItem label="Active Links" value={activeLinks} accent="green" />
+      </div>
+
+      {/* Flexible right stat item */}
+      <div className="flex-1 md:flex-none">
+        <StatItem label="Total Clicks" value={totalClicks} accent="blue" />
+      </div>
     </div>
   );
 }
@@ -53,7 +43,7 @@ function StatItem({
   return (
     <div
       className="
-        relative rounded-xl p-4
+        relative rounded-xl p-4 sm:p-3 md:p-4 lg:p-5 xl:p-6
         bg-white/5 border border-white/10
         hover:bg-white/[0.08]
         transition-all duration-300
@@ -72,10 +62,10 @@ function StatItem({
       />
 
       <div className="relative">
-        <p className="text-sm text-gray-400">
+        <p className="text-xs sm:text-sm md:text-sm lg:text-base text-gray-400">
           {label}
         </p>
-        <p className="text-3xl font-semibold mt-1">
+        <p className="text-2xl sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl font-semibold mt-1">
           {value}
         </p>
       </div>

@@ -51,15 +51,22 @@ export default function DashboardContainer() {
     }, []);
 
     return (
-        <div className="space-y-10">
-            <div className="flex flex-row">
-                <CreateLinkForm onSuccess={fetchLinks} />
-                <StatsBar links={links} />
+        <div className="space-y-8 sm:space-y-9 md:space-y-10 lg:space-y-10 xl:space-y-12">
+            {/* Header Section: Form + Stats */}
+            {/* Mobile: Stacked vertically | SM: Stacked | MD: Stacked | LG+: Side-by-side */}
+            <div className="flex flex-col gap-4 sm:gap-4 md:gap-4 lg:flex-row lg:gap-6 xl:gap-8">
+                <div className="flex-1">
+                    <CreateLinkForm onSuccess={fetchLinks} />
+                </div>
+                <div className="w-full lg:w-auto lg:flex-1">
+                    <StatsBar links={links} />
+                </div>
             </div>
-            <LinksTable links={links} loading={loading} />
+
+            {/* Links Table Section */}
+            <div className="w-full">
+                <LinksTable links={links} loading={loading} />
+            </div>
         </div>
-
     );
-
-
 }
