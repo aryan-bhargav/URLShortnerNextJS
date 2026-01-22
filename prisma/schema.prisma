@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
   output   = "../lib/generated/prisma"
@@ -11,13 +5,51 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String
+  name      String?
+
+  urls      Url[]    // 1 user → many URLs
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Url {
-  id          String   @id @default(cuid())
-  originalUrl String
-  shortCode   String   @unique
-  createdAt   DateTime @default(now())
-  visits      Int      @default(0)
+  id           String    @id @default(cuid())
+  originalUrl  String
+  shortCode    String    @unique
+
+  // ownership
+  userId       String
+  user         User      @relation(fields: [userId], references: [id])
+
+  // analytics
+  visits       Int       @default(0)
+  clickEvents  ClickEvent[]   // ✅ REQUIRED LINE
+
+  // lifecycle control
+  isActive     Boolean   @default(true)
+  expiresAt    DateTime?
+  maxClicks    Int?
+
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  @@index([shortCode])
+  @@index([userId])
+}
+
+model ClickEvent {
+  id        String   @id @default(cuid())
+  urlId     String
+  url       Url      @relation(fields: [urlId], references: [id])
+
+  createdAt DateTime @default(now())
+
+  @@index([urlId])
 }

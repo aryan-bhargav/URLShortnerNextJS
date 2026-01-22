@@ -1,0 +1,124 @@
+import { NextResponse } from "next/server";
+import prisma from "@/lib/db";
+import redis from "@/lib/redis";
+import { rateLimit } from "@/lib/rateLimit";
+import type { Url } from "@/lib/generated/prisma";
+
+
+const CACHE_TTL = 60 * 5; // 5 minutes
+const REDIRECT_LIMIT = 100; // requests
+const REDIRECT_WINDOW = 60; // seconds
+
+function isUrlValid(url: {
+  isActive: boolean;
+  expiresAt: Date | null;
+  maxClicks: number | null;
+  visits: number;
+}) {
+  if (!url.isActive) return false;
+
+  if (url.expiresAt && new Date(url.expiresAt) < new Date()) {
+    return false;
+  }
+
+  if (url.maxClicks !== null && url.visits >= url.maxClicks) {
+    return false;
+  }
+
+  return true;
+}
+
+async function incrementVisits(shortCode: string) {
+  try {
+    await prisma.url.update({
+      where: { shortCode },
+      data: {
+        visits: { increment: 1 },
+        clickEvents: {
+          create: {},
+        },
+      },
+    });
+  } catch (err) {
+    console.error("Failed to increment visits:", err);
+  }
+}
+
+
+export async function GET(
+  req: Request,
+  { params }: { params: { shortCode: string } }
+) {
+  const { shortCode } = params;
+
+  try {
+    // 🚦 RATE LIMIT (IP-based)
+    const ip =
+      req.headers.get("x-forwarded-for") ??
+      req.headers.get("x-real-ip") ??
+      "unknown";
+
+    const allowed = await rateLimit(
+      `rl:redirect:${ip}`,
+      REDIRECT_LIMIT,
+      REDIRECT_WINDOW
+    );
+
+    if (!allowed) {
+      return NextResponse.json(
+        { message: "Too many requests" },
+        { status: 429 }
+      );
+    }
+
+    const CACHE_KEY = `url:${shortCode}`;
+
+    // 1️⃣ Redis cache
+    const cached = await redis.get(CACHE_KEY);
+    if (cached) {
+      const url: Url = JSON.parse(cached);
+
+      if (!isUrlValid(url)) {
+        return NextResponse.json(
+          { message: "Link expired or disabled" },
+          { status: 410 }
+        );
+      }
+
+      incrementVisits(shortCode); // non-blocking
+      return NextResponse.redirect(url.originalUrl);
+    }
+
+    // 2️⃣ DB fallback
+    const url = await prisma.url.findUnique({
+      where: { shortCode },
+    });
+
+    if (!url) {
+      return NextResponse.json(
+        { message: "Short URL not found" },
+        { status: 404 }
+      );
+    }
+
+    if (!isUrlValid(url)) {
+      return NextResponse.json(
+        { message: "Link expired or disabled" },
+        { status: 410 }
+      );
+    }
+
+    // 3️⃣ Cache result
+    await redis.set(CACHE_KEY, JSON.stringify(url), "EX", CACHE_TTL);
+
+    incrementVisits(shortCode); // non-blocking
+    return NextResponse.redirect(url.originalUrl);
+  } catch (error) {
+    console.error("Redirect error:", error);
+
+    return NextResponse.json(
+      { message: "Internal server error" },
+      { status: 500 }
+    );
+  }
+}

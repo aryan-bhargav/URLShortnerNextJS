@@ -14,10 +14,20 @@ export type PrismaPromise<T> = $Public.PrismaPromise<T>
 
 
 /**
+ * Model User
+ * 
+ */
+export type User = $Result.DefaultSelection<Prisma.$UserPayload>
+/**
  * Model Url
  * 
  */
 export type Url = $Result.DefaultSelection<Prisma.$UrlPayload>
+/**
+ * Model ClickEvent
+ * 
+ */
+export type ClickEvent = $Result.DefaultSelection<Prisma.$ClickEventPayload>
 
 /**
  * ##  Prisma Client ʲˢ
@@ -26,8 +36,8 @@ export type Url = $Result.DefaultSelection<Prisma.$UrlPayload>
  * @example
  * ```
  * const prisma = new PrismaClient()
- * // Fetch zero or more Urls
- * const urls = await prisma.url.findMany()
+ * // Fetch zero or more Users
+ * const users = await prisma.user.findMany()
  * ```
  *
  *
@@ -47,8 +57,8 @@ export class PrismaClient<
    * @example
    * ```
    * const prisma = new PrismaClient()
-   * // Fetch zero or more Urls
-   * const urls = await prisma.url.findMany()
+   * // Fetch zero or more Users
+   * const users = await prisma.user.findMany()
    * ```
    *
    *
@@ -138,6 +148,16 @@ export class PrismaClient<
   }>>
 
       /**
+   * `prisma.user`: Exposes CRUD operations for the **User** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Users
+    * const users = await prisma.user.findMany()
+    * ```
+    */
+  get user(): Prisma.UserDelegate<ExtArgs, ClientOptions>;
+
+  /**
    * `prisma.url`: Exposes CRUD operations for the **Url** model.
     * Example usage:
     * ```ts
@@ -146,6 +166,16 @@ export class PrismaClient<
     * ```
     */
   get url(): Prisma.UrlDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.clickEvent`: Exposes CRUD operations for the **ClickEvent** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more ClickEvents
+    * const clickEvents = await prisma.clickEvent.findMany()
+    * ```
+    */
+  get clickEvent(): Prisma.ClickEventDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -586,7 +616,9 @@ export namespace Prisma {
 
 
   export const ModelName: {
-    Url: 'Url'
+    User: 'User',
+    Url: 'Url',
+    ClickEvent: 'ClickEvent'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -605,10 +637,84 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "url"
+      modelProps: "user" | "url" | "clickEvent"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
+      User: {
+        payload: Prisma.$UserPayload<ExtArgs>
+        fields: Prisma.UserFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.UserFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.UserFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserPayload>
+          }
+          findFirst: {
+            args: Prisma.UserFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.UserFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserPayload>
+          }
+          findMany: {
+            args: Prisma.UserFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserPayload>[]
+          }
+          create: {
+            args: Prisma.UserCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserPayload>
+          }
+          createMany: {
+            args: Prisma.UserCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.UserCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserPayload>[]
+          }
+          delete: {
+            args: Prisma.UserDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserPayload>
+          }
+          update: {
+            args: Prisma.UserUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserPayload>
+          }
+          deleteMany: {
+            args: Prisma.UserDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.UserUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.UserUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserPayload>[]
+          }
+          upsert: {
+            args: Prisma.UserUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserPayload>
+          }
+          aggregate: {
+            args: Prisma.UserAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateUser>
+          }
+          groupBy: {
+            args: Prisma.UserGroupByArgs<ExtArgs>
+            result: $Utils.Optional<UserGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.UserCountArgs<ExtArgs>
+            result: $Utils.Optional<UserCountAggregateOutputType> | number
+          }
+        }
+      }
       Url: {
         payload: Prisma.$UrlPayload<ExtArgs>
         fields: Prisma.UrlFieldRefs
@@ -680,6 +786,80 @@ export namespace Prisma {
           count: {
             args: Prisma.UrlCountArgs<ExtArgs>
             result: $Utils.Optional<UrlCountAggregateOutputType> | number
+          }
+        }
+      }
+      ClickEvent: {
+        payload: Prisma.$ClickEventPayload<ExtArgs>
+        fields: Prisma.ClickEventFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.ClickEventFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClickEventPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.ClickEventFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClickEventPayload>
+          }
+          findFirst: {
+            args: Prisma.ClickEventFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClickEventPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.ClickEventFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClickEventPayload>
+          }
+          findMany: {
+            args: Prisma.ClickEventFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClickEventPayload>[]
+          }
+          create: {
+            args: Prisma.ClickEventCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClickEventPayload>
+          }
+          createMany: {
+            args: Prisma.ClickEventCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.ClickEventCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClickEventPayload>[]
+          }
+          delete: {
+            args: Prisma.ClickEventDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClickEventPayload>
+          }
+          update: {
+            args: Prisma.ClickEventUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClickEventPayload>
+          }
+          deleteMany: {
+            args: Prisma.ClickEventDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.ClickEventUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.ClickEventUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClickEventPayload>[]
+          }
+          upsert: {
+            args: Prisma.ClickEventUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClickEventPayload>
+          }
+          aggregate: {
+            args: Prisma.ClickEventAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateClickEvent>
+          }
+          groupBy: {
+            args: Prisma.ClickEventGroupByArgs<ExtArgs>
+            result: $Utils.Optional<ClickEventGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.ClickEventCountArgs<ExtArgs>
+            result: $Utils.Optional<ClickEventCountAggregateOutputType> | number
           }
         }
       }
@@ -779,7 +959,9 @@ export namespace Prisma {
     omit?: Prisma.GlobalOmitConfig
   }
   export type GlobalOmitConfig = {
+    user?: UserOmit
     url?: UrlOmit
+    clickEvent?: ClickEventOmit
   }
 
   /* Types for Logging */
@@ -855,10 +1037,1154 @@ export namespace Prisma {
    */
 
 
+  /**
+   * Count Type UserCountOutputType
+   */
+
+  export type UserCountOutputType = {
+    urls: number
+  }
+
+  export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    urls?: boolean | UserCountOutputTypeCountUrlsArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserCountOutputType
+     */
+    select?: UserCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountUrlsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: UrlWhereInput
+  }
+
+
+  /**
+   * Count Type UrlCountOutputType
+   */
+
+  export type UrlCountOutputType = {
+    clickEvents: number
+  }
+
+  export type UrlCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    clickEvents?: boolean | UrlCountOutputTypeCountClickEventsArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * UrlCountOutputType without action
+   */
+  export type UrlCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UrlCountOutputType
+     */
+    select?: UrlCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * UrlCountOutputType without action
+   */
+  export type UrlCountOutputTypeCountClickEventsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ClickEventWhereInput
+  }
+
 
   /**
    * Models
    */
+
+  /**
+   * Model User
+   */
+
+  export type AggregateUser = {
+    _count: UserCountAggregateOutputType | null
+    _min: UserMinAggregateOutputType | null
+    _max: UserMaxAggregateOutputType | null
+  }
+
+  export type UserMinAggregateOutputType = {
+    id: string | null
+    email: string | null
+    password: string | null
+    name: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type UserMaxAggregateOutputType = {
+    id: string | null
+    email: string | null
+    password: string | null
+    name: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type UserCountAggregateOutputType = {
+    id: number
+    email: number
+    password: number
+    name: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type UserMinAggregateInputType = {
+    id?: true
+    email?: true
+    password?: true
+    name?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type UserMaxAggregateInputType = {
+    id?: true
+    email?: true
+    password?: true
+    name?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type UserCountAggregateInputType = {
+    id?: true
+    email?: true
+    password?: true
+    name?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type UserAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which User to aggregate.
+     */
+    where?: UserWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Users to fetch.
+     */
+    orderBy?: UserOrderByWithRelationInput | UserOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: UserWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Users from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Users.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Users
+    **/
+    _count?: true | UserCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: UserMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: UserMaxAggregateInputType
+  }
+
+  export type GetUserAggregateType<T extends UserAggregateArgs> = {
+        [P in keyof T & keyof AggregateUser]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateUser[P]>
+      : GetScalarType<T[P], AggregateUser[P]>
+  }
+
+
+
+
+  export type UserGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: UserWhereInput
+    orderBy?: UserOrderByWithAggregationInput | UserOrderByWithAggregationInput[]
+    by: UserScalarFieldEnum[] | UserScalarFieldEnum
+    having?: UserScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: UserCountAggregateInputType | true
+    _min?: UserMinAggregateInputType
+    _max?: UserMaxAggregateInputType
+  }
+
+  export type UserGroupByOutputType = {
+    id: string
+    email: string
+    password: string
+    name: string | null
+    createdAt: Date
+    updatedAt: Date
+    _count: UserCountAggregateOutputType | null
+    _min: UserMinAggregateOutputType | null
+    _max: UserMaxAggregateOutputType | null
+  }
+
+  type GetUserGroupByPayload<T extends UserGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<UserGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof UserGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], UserGroupByOutputType[P]>
+            : GetScalarType<T[P], UserGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type UserSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    email?: boolean
+    password?: boolean
+    name?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    urls?: boolean | User$urlsArgs<ExtArgs>
+    _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["user"]>
+
+  export type UserSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    email?: boolean
+    password?: boolean
+    name?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["user"]>
+
+  export type UserSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    email?: boolean
+    password?: boolean
+    name?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["user"]>
+
+  export type UserSelectScalar = {
+    id?: boolean
+    email?: boolean
+    password?: boolean
+    name?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "password" | "name" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
+  export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    urls?: boolean | User$urlsArgs<ExtArgs>
+    _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type UserIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+
+  export type $UserPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "User"
+    objects: {
+      urls: Prisma.$UrlPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      email: string
+      password: string
+      name: string | null
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["user"]>
+    composites: {}
+  }
+
+  type UserGetPayload<S extends boolean | null | undefined | UserDefaultArgs> = $Result.GetResult<Prisma.$UserPayload, S>
+
+  type UserCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<UserFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: UserCountAggregateInputType | true
+    }
+
+  export interface UserDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['User'], meta: { name: 'User' } }
+    /**
+     * Find zero or one User that matches the filter.
+     * @param {UserFindUniqueArgs} args - Arguments to find a User
+     * @example
+     * // Get one User
+     * const user = await prisma.user.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends UserFindUniqueArgs>(args: SelectSubset<T, UserFindUniqueArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one User that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {UserFindUniqueOrThrowArgs} args - Arguments to find a User
+     * @example
+     * // Get one User
+     * const user = await prisma.user.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends UserFindUniqueOrThrowArgs>(args: SelectSubset<T, UserFindUniqueOrThrowArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first User that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserFindFirstArgs} args - Arguments to find a User
+     * @example
+     * // Get one User
+     * const user = await prisma.user.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends UserFindFirstArgs>(args?: SelectSubset<T, UserFindFirstArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first User that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserFindFirstOrThrowArgs} args - Arguments to find a User
+     * @example
+     * // Get one User
+     * const user = await prisma.user.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends UserFindFirstOrThrowArgs>(args?: SelectSubset<T, UserFindFirstOrThrowArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Users that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Users
+     * const users = await prisma.user.findMany()
+     * 
+     * // Get first 10 Users
+     * const users = await prisma.user.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const userWithIdOnly = await prisma.user.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends UserFindManyArgs>(args?: SelectSubset<T, UserFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a User.
+     * @param {UserCreateArgs} args - Arguments to create a User.
+     * @example
+     * // Create one User
+     * const User = await prisma.user.create({
+     *   data: {
+     *     // ... data to create a User
+     *   }
+     * })
+     * 
+     */
+    create<T extends UserCreateArgs>(args: SelectSubset<T, UserCreateArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Users.
+     * @param {UserCreateManyArgs} args - Arguments to create many Users.
+     * @example
+     * // Create many Users
+     * const user = await prisma.user.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends UserCreateManyArgs>(args?: SelectSubset<T, UserCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Users and returns the data saved in the database.
+     * @param {UserCreateManyAndReturnArgs} args - Arguments to create many Users.
+     * @example
+     * // Create many Users
+     * const user = await prisma.user.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Users and only return the `id`
+     * const userWithIdOnly = await prisma.user.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends UserCreateManyAndReturnArgs>(args?: SelectSubset<T, UserCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a User.
+     * @param {UserDeleteArgs} args - Arguments to delete one User.
+     * @example
+     * // Delete one User
+     * const User = await prisma.user.delete({
+     *   where: {
+     *     // ... filter to delete one User
+     *   }
+     * })
+     * 
+     */
+    delete<T extends UserDeleteArgs>(args: SelectSubset<T, UserDeleteArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one User.
+     * @param {UserUpdateArgs} args - Arguments to update one User.
+     * @example
+     * // Update one User
+     * const user = await prisma.user.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends UserUpdateArgs>(args: SelectSubset<T, UserUpdateArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Users.
+     * @param {UserDeleteManyArgs} args - Arguments to filter Users to delete.
+     * @example
+     * // Delete a few Users
+     * const { count } = await prisma.user.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends UserDeleteManyArgs>(args?: SelectSubset<T, UserDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Users.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Users
+     * const user = await prisma.user.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends UserUpdateManyArgs>(args: SelectSubset<T, UserUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Users and returns the data updated in the database.
+     * @param {UserUpdateManyAndReturnArgs} args - Arguments to update many Users.
+     * @example
+     * // Update many Users
+     * const user = await prisma.user.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Users and only return the `id`
+     * const userWithIdOnly = await prisma.user.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends UserUpdateManyAndReturnArgs>(args: SelectSubset<T, UserUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one User.
+     * @param {UserUpsertArgs} args - Arguments to update or create a User.
+     * @example
+     * // Update or create a User
+     * const user = await prisma.user.upsert({
+     *   create: {
+     *     // ... data to create a User
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the User we want to update
+     *   }
+     * })
+     */
+    upsert<T extends UserUpsertArgs>(args: SelectSubset<T, UserUpsertArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Users.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserCountArgs} args - Arguments to filter Users to count.
+     * @example
+     * // Count the number of Users
+     * const count = await prisma.user.count({
+     *   where: {
+     *     // ... the filter for the Users we want to count
+     *   }
+     * })
+    **/
+    count<T extends UserCountArgs>(
+      args?: Subset<T, UserCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], UserCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a User.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends UserAggregateArgs>(args: Subset<T, UserAggregateArgs>): Prisma.PrismaPromise<GetUserAggregateType<T>>
+
+    /**
+     * Group by User.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends UserGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: UserGroupByArgs['orderBy'] }
+        : { orderBy?: UserGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, UserGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetUserGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the User model
+   */
+  readonly fields: UserFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for User.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__UserClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    urls<T extends User$urlsArgs<ExtArgs> = {}>(args?: Subset<T, User$urlsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UrlPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the User model
+   */
+  interface UserFieldRefs {
+    readonly id: FieldRef<"User", 'String'>
+    readonly email: FieldRef<"User", 'String'>
+    readonly password: FieldRef<"User", 'String'>
+    readonly name: FieldRef<"User", 'String'>
+    readonly createdAt: FieldRef<"User", 'DateTime'>
+    readonly updatedAt: FieldRef<"User", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * User findUnique
+   */
+  export type UserFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    /**
+     * Filter, which User to fetch.
+     */
+    where: UserWhereUniqueInput
+  }
+
+  /**
+   * User findUniqueOrThrow
+   */
+  export type UserFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    /**
+     * Filter, which User to fetch.
+     */
+    where: UserWhereUniqueInput
+  }
+
+  /**
+   * User findFirst
+   */
+  export type UserFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    /**
+     * Filter, which User to fetch.
+     */
+    where?: UserWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Users to fetch.
+     */
+    orderBy?: UserOrderByWithRelationInput | UserOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Users.
+     */
+    cursor?: UserWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Users from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Users.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Users.
+     */
+    distinct?: UserScalarFieldEnum | UserScalarFieldEnum[]
+  }
+
+  /**
+   * User findFirstOrThrow
+   */
+  export type UserFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    /**
+     * Filter, which User to fetch.
+     */
+    where?: UserWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Users to fetch.
+     */
+    orderBy?: UserOrderByWithRelationInput | UserOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Users.
+     */
+    cursor?: UserWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Users from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Users.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Users.
+     */
+    distinct?: UserScalarFieldEnum | UserScalarFieldEnum[]
+  }
+
+  /**
+   * User findMany
+   */
+  export type UserFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    /**
+     * Filter, which Users to fetch.
+     */
+    where?: UserWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Users to fetch.
+     */
+    orderBy?: UserOrderByWithRelationInput | UserOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Users.
+     */
+    cursor?: UserWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Users from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Users.
+     */
+    skip?: number
+    distinct?: UserScalarFieldEnum | UserScalarFieldEnum[]
+  }
+
+  /**
+   * User create
+   */
+  export type UserCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    /**
+     * The data needed to create a User.
+     */
+    data: XOR<UserCreateInput, UserUncheckedCreateInput>
+  }
+
+  /**
+   * User createMany
+   */
+  export type UserCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Users.
+     */
+    data: UserCreateManyInput | UserCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * User createManyAndReturn
+   */
+  export type UserCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * The data used to create many Users.
+     */
+    data: UserCreateManyInput | UserCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * User update
+   */
+  export type UserUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    /**
+     * The data needed to update a User.
+     */
+    data: XOR<UserUpdateInput, UserUncheckedUpdateInput>
+    /**
+     * Choose, which User to update.
+     */
+    where: UserWhereUniqueInput
+  }
+
+  /**
+   * User updateMany
+   */
+  export type UserUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Users.
+     */
+    data: XOR<UserUpdateManyMutationInput, UserUncheckedUpdateManyInput>
+    /**
+     * Filter which Users to update
+     */
+    where?: UserWhereInput
+    /**
+     * Limit how many Users to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * User updateManyAndReturn
+   */
+  export type UserUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * The data used to update Users.
+     */
+    data: XOR<UserUpdateManyMutationInput, UserUncheckedUpdateManyInput>
+    /**
+     * Filter which Users to update
+     */
+    where?: UserWhereInput
+    /**
+     * Limit how many Users to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * User upsert
+   */
+  export type UserUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    /**
+     * The filter to search for the User to update in case it exists.
+     */
+    where: UserWhereUniqueInput
+    /**
+     * In case the User found by the `where` argument doesn't exist, create a new User with this data.
+     */
+    create: XOR<UserCreateInput, UserUncheckedCreateInput>
+    /**
+     * In case the User was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<UserUpdateInput, UserUncheckedUpdateInput>
+  }
+
+  /**
+   * User delete
+   */
+  export type UserDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    /**
+     * Filter which User to delete.
+     */
+    where: UserWhereUniqueInput
+  }
+
+  /**
+   * User deleteMany
+   */
+  export type UserDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Users to delete
+     */
+    where?: UserWhereInput
+    /**
+     * Limit how many Users to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * User.urls
+   */
+  export type User$urlsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Url
+     */
+    select?: UrlSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Url
+     */
+    omit?: UrlOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UrlInclude<ExtArgs> | null
+    where?: UrlWhereInput
+    orderBy?: UrlOrderByWithRelationInput | UrlOrderByWithRelationInput[]
+    cursor?: UrlWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: UrlScalarFieldEnum | UrlScalarFieldEnum[]
+  }
+
+  /**
+   * User without action
+   */
+  export type UserDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+  }
+
 
   /**
    * Model Url
@@ -874,68 +2200,102 @@ export namespace Prisma {
 
   export type UrlAvgAggregateOutputType = {
     visits: number | null
+    maxClicks: number | null
   }
 
   export type UrlSumAggregateOutputType = {
     visits: number | null
+    maxClicks: number | null
   }
 
   export type UrlMinAggregateOutputType = {
     id: string | null
     originalUrl: string | null
     shortCode: string | null
-    createdAt: Date | null
+    userId: string | null
     visits: number | null
+    isActive: boolean | null
+    expiresAt: Date | null
+    maxClicks: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
   }
 
   export type UrlMaxAggregateOutputType = {
     id: string | null
     originalUrl: string | null
     shortCode: string | null
-    createdAt: Date | null
+    userId: string | null
     visits: number | null
+    isActive: boolean | null
+    expiresAt: Date | null
+    maxClicks: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
   }
 
   export type UrlCountAggregateOutputType = {
     id: number
     originalUrl: number
     shortCode: number
-    createdAt: number
+    userId: number
     visits: number
+    isActive: number
+    expiresAt: number
+    maxClicks: number
+    createdAt: number
+    updatedAt: number
     _all: number
   }
 
 
   export type UrlAvgAggregateInputType = {
     visits?: true
+    maxClicks?: true
   }
 
   export type UrlSumAggregateInputType = {
     visits?: true
+    maxClicks?: true
   }
 
   export type UrlMinAggregateInputType = {
     id?: true
     originalUrl?: true
     shortCode?: true
-    createdAt?: true
+    userId?: true
     visits?: true
+    isActive?: true
+    expiresAt?: true
+    maxClicks?: true
+    createdAt?: true
+    updatedAt?: true
   }
 
   export type UrlMaxAggregateInputType = {
     id?: true
     originalUrl?: true
     shortCode?: true
-    createdAt?: true
+    userId?: true
     visits?: true
+    isActive?: true
+    expiresAt?: true
+    maxClicks?: true
+    createdAt?: true
+    updatedAt?: true
   }
 
   export type UrlCountAggregateInputType = {
     id?: true
     originalUrl?: true
     shortCode?: true
-    createdAt?: true
+    userId?: true
     visits?: true
+    isActive?: true
+    expiresAt?: true
+    maxClicks?: true
+    createdAt?: true
+    updatedAt?: true
     _all?: true
   }
 
@@ -1029,8 +2389,13 @@ export namespace Prisma {
     id: string
     originalUrl: string
     shortCode: string
-    createdAt: Date
+    userId: string
     visits: number
+    isActive: boolean
+    expiresAt: Date | null
+    maxClicks: number | null
+    createdAt: Date
+    updatedAt: Date
     _count: UrlCountAggregateOutputType | null
     _avg: UrlAvgAggregateOutputType | null
     _sum: UrlSumAggregateOutputType | null
@@ -1056,45 +2421,89 @@ export namespace Prisma {
     id?: boolean
     originalUrl?: boolean
     shortCode?: boolean
-    createdAt?: boolean
+    userId?: boolean
     visits?: boolean
+    isActive?: boolean
+    expiresAt?: boolean
+    maxClicks?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    clickEvents?: boolean | Url$clickEventsArgs<ExtArgs>
+    _count?: boolean | UrlCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["url"]>
 
   export type UrlSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     originalUrl?: boolean
     shortCode?: boolean
-    createdAt?: boolean
+    userId?: boolean
     visits?: boolean
+    isActive?: boolean
+    expiresAt?: boolean
+    maxClicks?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["url"]>
 
   export type UrlSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     originalUrl?: boolean
     shortCode?: boolean
-    createdAt?: boolean
+    userId?: boolean
     visits?: boolean
+    isActive?: boolean
+    expiresAt?: boolean
+    maxClicks?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["url"]>
 
   export type UrlSelectScalar = {
     id?: boolean
     originalUrl?: boolean
     shortCode?: boolean
-    createdAt?: boolean
+    userId?: boolean
     visits?: boolean
+    isActive?: boolean
+    expiresAt?: boolean
+    maxClicks?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
   }
 
-  export type UrlOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "originalUrl" | "shortCode" | "createdAt" | "visits", ExtArgs["result"]["url"]>
+  export type UrlOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "originalUrl" | "shortCode" | "userId" | "visits" | "isActive" | "expiresAt" | "maxClicks" | "createdAt" | "updatedAt", ExtArgs["result"]["url"]>
+  export type UrlInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    clickEvents?: boolean | Url$clickEventsArgs<ExtArgs>
+    _count?: boolean | UrlCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type UrlIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type UrlIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
 
   export type $UrlPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Url"
-    objects: {}
+    objects: {
+      user: Prisma.$UserPayload<ExtArgs>
+      clickEvents: Prisma.$ClickEventPayload<ExtArgs>[]
+    }
     scalars: $Extensions.GetPayloadResult<{
       id: string
       originalUrl: string
       shortCode: string
-      createdAt: Date
+      userId: string
       visits: number
+      isActive: boolean
+      expiresAt: Date | null
+      maxClicks: number | null
+      createdAt: Date
+      updatedAt: Date
     }, ExtArgs["result"]["url"]>
     composites: {}
   }
@@ -1489,6 +2898,8 @@ export namespace Prisma {
    */
   export interface Prisma__UrlClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    clickEvents<T extends Url$clickEventsArgs<ExtArgs> = {}>(args?: Subset<T, Url$clickEventsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ClickEventPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1521,8 +2932,13 @@ export namespace Prisma {
     readonly id: FieldRef<"Url", 'String'>
     readonly originalUrl: FieldRef<"Url", 'String'>
     readonly shortCode: FieldRef<"Url", 'String'>
-    readonly createdAt: FieldRef<"Url", 'DateTime'>
+    readonly userId: FieldRef<"Url", 'String'>
     readonly visits: FieldRef<"Url", 'Int'>
+    readonly isActive: FieldRef<"Url", 'Boolean'>
+    readonly expiresAt: FieldRef<"Url", 'DateTime'>
+    readonly maxClicks: FieldRef<"Url", 'Int'>
+    readonly createdAt: FieldRef<"Url", 'DateTime'>
+    readonly updatedAt: FieldRef<"Url", 'DateTime'>
   }
     
 
@@ -1539,6 +2955,10 @@ export namespace Prisma {
      * Omit specific fields from the Url
      */
     omit?: UrlOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UrlInclude<ExtArgs> | null
     /**
      * Filter, which Url to fetch.
      */
@@ -1558,6 +2978,10 @@ export namespace Prisma {
      */
     omit?: UrlOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UrlInclude<ExtArgs> | null
+    /**
      * Filter, which Url to fetch.
      */
     where: UrlWhereUniqueInput
@@ -1575,6 +2999,10 @@ export namespace Prisma {
      * Omit specific fields from the Url
      */
     omit?: UrlOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UrlInclude<ExtArgs> | null
     /**
      * Filter, which Url to fetch.
      */
@@ -1624,6 +3052,10 @@ export namespace Prisma {
      */
     omit?: UrlOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UrlInclude<ExtArgs> | null
+    /**
      * Filter, which Url to fetch.
      */
     where?: UrlWhereInput
@@ -1672,6 +3104,10 @@ export namespace Prisma {
      */
     omit?: UrlOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UrlInclude<ExtArgs> | null
+    /**
      * Filter, which Urls to fetch.
      */
     where?: UrlWhereInput
@@ -1715,6 +3151,10 @@ export namespace Prisma {
      */
     omit?: UrlOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UrlInclude<ExtArgs> | null
+    /**
      * The data needed to create a Url.
      */
     data: XOR<UrlCreateInput, UrlUncheckedCreateInput>
@@ -1748,6 +3188,10 @@ export namespace Prisma {
      */
     data: UrlCreateManyInput | UrlCreateManyInput[]
     skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UrlIncludeCreateManyAndReturn<ExtArgs> | null
   }
 
   /**
@@ -1762,6 +3206,10 @@ export namespace Prisma {
      * Omit specific fields from the Url
      */
     omit?: UrlOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UrlInclude<ExtArgs> | null
     /**
      * The data needed to update a Url.
      */
@@ -1814,6 +3262,10 @@ export namespace Prisma {
      * Limit how many Urls to update.
      */
     limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UrlIncludeUpdateManyAndReturn<ExtArgs> | null
   }
 
   /**
@@ -1828,6 +3280,10 @@ export namespace Prisma {
      * Omit specific fields from the Url
      */
     omit?: UrlOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UrlInclude<ExtArgs> | null
     /**
      * The filter to search for the Url to update in case it exists.
      */
@@ -1855,6 +3311,10 @@ export namespace Prisma {
      */
     omit?: UrlOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UrlInclude<ExtArgs> | null
+    /**
      * Filter which Url to delete.
      */
     where: UrlWhereUniqueInput
@@ -1875,6 +3335,30 @@ export namespace Prisma {
   }
 
   /**
+   * Url.clickEvents
+   */
+  export type Url$clickEventsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClickEvent
+     */
+    select?: ClickEventSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClickEvent
+     */
+    omit?: ClickEventOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClickEventInclude<ExtArgs> | null
+    where?: ClickEventWhereInput
+    orderBy?: ClickEventOrderByWithRelationInput | ClickEventOrderByWithRelationInput[]
+    cursor?: ClickEventWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ClickEventScalarFieldEnum | ClickEventScalarFieldEnum[]
+  }
+
+  /**
    * Url without action
    */
   export type UrlDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -1886,6 +3370,1042 @@ export namespace Prisma {
      * Omit specific fields from the Url
      */
     omit?: UrlOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UrlInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model ClickEvent
+   */
+
+  export type AggregateClickEvent = {
+    _count: ClickEventCountAggregateOutputType | null
+    _min: ClickEventMinAggregateOutputType | null
+    _max: ClickEventMaxAggregateOutputType | null
+  }
+
+  export type ClickEventMinAggregateOutputType = {
+    id: string | null
+    urlId: string | null
+    createdAt: Date | null
+  }
+
+  export type ClickEventMaxAggregateOutputType = {
+    id: string | null
+    urlId: string | null
+    createdAt: Date | null
+  }
+
+  export type ClickEventCountAggregateOutputType = {
+    id: number
+    urlId: number
+    createdAt: number
+    _all: number
+  }
+
+
+  export type ClickEventMinAggregateInputType = {
+    id?: true
+    urlId?: true
+    createdAt?: true
+  }
+
+  export type ClickEventMaxAggregateInputType = {
+    id?: true
+    urlId?: true
+    createdAt?: true
+  }
+
+  export type ClickEventCountAggregateInputType = {
+    id?: true
+    urlId?: true
+    createdAt?: true
+    _all?: true
+  }
+
+  export type ClickEventAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ClickEvent to aggregate.
+     */
+    where?: ClickEventWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ClickEvents to fetch.
+     */
+    orderBy?: ClickEventOrderByWithRelationInput | ClickEventOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: ClickEventWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ClickEvents from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ClickEvents.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned ClickEvents
+    **/
+    _count?: true | ClickEventCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: ClickEventMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: ClickEventMaxAggregateInputType
+  }
+
+  export type GetClickEventAggregateType<T extends ClickEventAggregateArgs> = {
+        [P in keyof T & keyof AggregateClickEvent]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateClickEvent[P]>
+      : GetScalarType<T[P], AggregateClickEvent[P]>
+  }
+
+
+
+
+  export type ClickEventGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ClickEventWhereInput
+    orderBy?: ClickEventOrderByWithAggregationInput | ClickEventOrderByWithAggregationInput[]
+    by: ClickEventScalarFieldEnum[] | ClickEventScalarFieldEnum
+    having?: ClickEventScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: ClickEventCountAggregateInputType | true
+    _min?: ClickEventMinAggregateInputType
+    _max?: ClickEventMaxAggregateInputType
+  }
+
+  export type ClickEventGroupByOutputType = {
+    id: string
+    urlId: string
+    createdAt: Date
+    _count: ClickEventCountAggregateOutputType | null
+    _min: ClickEventMinAggregateOutputType | null
+    _max: ClickEventMaxAggregateOutputType | null
+  }
+
+  type GetClickEventGroupByPayload<T extends ClickEventGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<ClickEventGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof ClickEventGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], ClickEventGroupByOutputType[P]>
+            : GetScalarType<T[P], ClickEventGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type ClickEventSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    urlId?: boolean
+    createdAt?: boolean
+    url?: boolean | UrlDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["clickEvent"]>
+
+  export type ClickEventSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    urlId?: boolean
+    createdAt?: boolean
+    url?: boolean | UrlDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["clickEvent"]>
+
+  export type ClickEventSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    urlId?: boolean
+    createdAt?: boolean
+    url?: boolean | UrlDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["clickEvent"]>
+
+  export type ClickEventSelectScalar = {
+    id?: boolean
+    urlId?: boolean
+    createdAt?: boolean
+  }
+
+  export type ClickEventOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "urlId" | "createdAt", ExtArgs["result"]["clickEvent"]>
+  export type ClickEventInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    url?: boolean | UrlDefaultArgs<ExtArgs>
+  }
+  export type ClickEventIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    url?: boolean | UrlDefaultArgs<ExtArgs>
+  }
+  export type ClickEventIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    url?: boolean | UrlDefaultArgs<ExtArgs>
+  }
+
+  export type $ClickEventPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "ClickEvent"
+    objects: {
+      url: Prisma.$UrlPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      urlId: string
+      createdAt: Date
+    }, ExtArgs["result"]["clickEvent"]>
+    composites: {}
+  }
+
+  type ClickEventGetPayload<S extends boolean | null | undefined | ClickEventDefaultArgs> = $Result.GetResult<Prisma.$ClickEventPayload, S>
+
+  type ClickEventCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<ClickEventFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: ClickEventCountAggregateInputType | true
+    }
+
+  export interface ClickEventDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['ClickEvent'], meta: { name: 'ClickEvent' } }
+    /**
+     * Find zero or one ClickEvent that matches the filter.
+     * @param {ClickEventFindUniqueArgs} args - Arguments to find a ClickEvent
+     * @example
+     * // Get one ClickEvent
+     * const clickEvent = await prisma.clickEvent.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends ClickEventFindUniqueArgs>(args: SelectSubset<T, ClickEventFindUniqueArgs<ExtArgs>>): Prisma__ClickEventClient<$Result.GetResult<Prisma.$ClickEventPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one ClickEvent that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {ClickEventFindUniqueOrThrowArgs} args - Arguments to find a ClickEvent
+     * @example
+     * // Get one ClickEvent
+     * const clickEvent = await prisma.clickEvent.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends ClickEventFindUniqueOrThrowArgs>(args: SelectSubset<T, ClickEventFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ClickEventClient<$Result.GetResult<Prisma.$ClickEventPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first ClickEvent that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ClickEventFindFirstArgs} args - Arguments to find a ClickEvent
+     * @example
+     * // Get one ClickEvent
+     * const clickEvent = await prisma.clickEvent.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends ClickEventFindFirstArgs>(args?: SelectSubset<T, ClickEventFindFirstArgs<ExtArgs>>): Prisma__ClickEventClient<$Result.GetResult<Prisma.$ClickEventPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first ClickEvent that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ClickEventFindFirstOrThrowArgs} args - Arguments to find a ClickEvent
+     * @example
+     * // Get one ClickEvent
+     * const clickEvent = await prisma.clickEvent.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends ClickEventFindFirstOrThrowArgs>(args?: SelectSubset<T, ClickEventFindFirstOrThrowArgs<ExtArgs>>): Prisma__ClickEventClient<$Result.GetResult<Prisma.$ClickEventPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more ClickEvents that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ClickEventFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all ClickEvents
+     * const clickEvents = await prisma.clickEvent.findMany()
+     * 
+     * // Get first 10 ClickEvents
+     * const clickEvents = await prisma.clickEvent.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const clickEventWithIdOnly = await prisma.clickEvent.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends ClickEventFindManyArgs>(args?: SelectSubset<T, ClickEventFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ClickEventPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a ClickEvent.
+     * @param {ClickEventCreateArgs} args - Arguments to create a ClickEvent.
+     * @example
+     * // Create one ClickEvent
+     * const ClickEvent = await prisma.clickEvent.create({
+     *   data: {
+     *     // ... data to create a ClickEvent
+     *   }
+     * })
+     * 
+     */
+    create<T extends ClickEventCreateArgs>(args: SelectSubset<T, ClickEventCreateArgs<ExtArgs>>): Prisma__ClickEventClient<$Result.GetResult<Prisma.$ClickEventPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many ClickEvents.
+     * @param {ClickEventCreateManyArgs} args - Arguments to create many ClickEvents.
+     * @example
+     * // Create many ClickEvents
+     * const clickEvent = await prisma.clickEvent.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends ClickEventCreateManyArgs>(args?: SelectSubset<T, ClickEventCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many ClickEvents and returns the data saved in the database.
+     * @param {ClickEventCreateManyAndReturnArgs} args - Arguments to create many ClickEvents.
+     * @example
+     * // Create many ClickEvents
+     * const clickEvent = await prisma.clickEvent.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many ClickEvents and only return the `id`
+     * const clickEventWithIdOnly = await prisma.clickEvent.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends ClickEventCreateManyAndReturnArgs>(args?: SelectSubset<T, ClickEventCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ClickEventPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a ClickEvent.
+     * @param {ClickEventDeleteArgs} args - Arguments to delete one ClickEvent.
+     * @example
+     * // Delete one ClickEvent
+     * const ClickEvent = await prisma.clickEvent.delete({
+     *   where: {
+     *     // ... filter to delete one ClickEvent
+     *   }
+     * })
+     * 
+     */
+    delete<T extends ClickEventDeleteArgs>(args: SelectSubset<T, ClickEventDeleteArgs<ExtArgs>>): Prisma__ClickEventClient<$Result.GetResult<Prisma.$ClickEventPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one ClickEvent.
+     * @param {ClickEventUpdateArgs} args - Arguments to update one ClickEvent.
+     * @example
+     * // Update one ClickEvent
+     * const clickEvent = await prisma.clickEvent.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends ClickEventUpdateArgs>(args: SelectSubset<T, ClickEventUpdateArgs<ExtArgs>>): Prisma__ClickEventClient<$Result.GetResult<Prisma.$ClickEventPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more ClickEvents.
+     * @param {ClickEventDeleteManyArgs} args - Arguments to filter ClickEvents to delete.
+     * @example
+     * // Delete a few ClickEvents
+     * const { count } = await prisma.clickEvent.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends ClickEventDeleteManyArgs>(args?: SelectSubset<T, ClickEventDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ClickEvents.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ClickEventUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many ClickEvents
+     * const clickEvent = await prisma.clickEvent.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends ClickEventUpdateManyArgs>(args: SelectSubset<T, ClickEventUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ClickEvents and returns the data updated in the database.
+     * @param {ClickEventUpdateManyAndReturnArgs} args - Arguments to update many ClickEvents.
+     * @example
+     * // Update many ClickEvents
+     * const clickEvent = await prisma.clickEvent.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more ClickEvents and only return the `id`
+     * const clickEventWithIdOnly = await prisma.clickEvent.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends ClickEventUpdateManyAndReturnArgs>(args: SelectSubset<T, ClickEventUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ClickEventPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one ClickEvent.
+     * @param {ClickEventUpsertArgs} args - Arguments to update or create a ClickEvent.
+     * @example
+     * // Update or create a ClickEvent
+     * const clickEvent = await prisma.clickEvent.upsert({
+     *   create: {
+     *     // ... data to create a ClickEvent
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the ClickEvent we want to update
+     *   }
+     * })
+     */
+    upsert<T extends ClickEventUpsertArgs>(args: SelectSubset<T, ClickEventUpsertArgs<ExtArgs>>): Prisma__ClickEventClient<$Result.GetResult<Prisma.$ClickEventPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of ClickEvents.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ClickEventCountArgs} args - Arguments to filter ClickEvents to count.
+     * @example
+     * // Count the number of ClickEvents
+     * const count = await prisma.clickEvent.count({
+     *   where: {
+     *     // ... the filter for the ClickEvents we want to count
+     *   }
+     * })
+    **/
+    count<T extends ClickEventCountArgs>(
+      args?: Subset<T, ClickEventCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], ClickEventCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a ClickEvent.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ClickEventAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends ClickEventAggregateArgs>(args: Subset<T, ClickEventAggregateArgs>): Prisma.PrismaPromise<GetClickEventAggregateType<T>>
+
+    /**
+     * Group by ClickEvent.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ClickEventGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends ClickEventGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: ClickEventGroupByArgs['orderBy'] }
+        : { orderBy?: ClickEventGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, ClickEventGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetClickEventGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the ClickEvent model
+   */
+  readonly fields: ClickEventFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for ClickEvent.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__ClickEventClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    url<T extends UrlDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UrlDefaultArgs<ExtArgs>>): Prisma__UrlClient<$Result.GetResult<Prisma.$UrlPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the ClickEvent model
+   */
+  interface ClickEventFieldRefs {
+    readonly id: FieldRef<"ClickEvent", 'String'>
+    readonly urlId: FieldRef<"ClickEvent", 'String'>
+    readonly createdAt: FieldRef<"ClickEvent", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * ClickEvent findUnique
+   */
+  export type ClickEventFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClickEvent
+     */
+    select?: ClickEventSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClickEvent
+     */
+    omit?: ClickEventOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClickEventInclude<ExtArgs> | null
+    /**
+     * Filter, which ClickEvent to fetch.
+     */
+    where: ClickEventWhereUniqueInput
+  }
+
+  /**
+   * ClickEvent findUniqueOrThrow
+   */
+  export type ClickEventFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClickEvent
+     */
+    select?: ClickEventSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClickEvent
+     */
+    omit?: ClickEventOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClickEventInclude<ExtArgs> | null
+    /**
+     * Filter, which ClickEvent to fetch.
+     */
+    where: ClickEventWhereUniqueInput
+  }
+
+  /**
+   * ClickEvent findFirst
+   */
+  export type ClickEventFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClickEvent
+     */
+    select?: ClickEventSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClickEvent
+     */
+    omit?: ClickEventOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClickEventInclude<ExtArgs> | null
+    /**
+     * Filter, which ClickEvent to fetch.
+     */
+    where?: ClickEventWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ClickEvents to fetch.
+     */
+    orderBy?: ClickEventOrderByWithRelationInput | ClickEventOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ClickEvents.
+     */
+    cursor?: ClickEventWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ClickEvents from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ClickEvents.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ClickEvents.
+     */
+    distinct?: ClickEventScalarFieldEnum | ClickEventScalarFieldEnum[]
+  }
+
+  /**
+   * ClickEvent findFirstOrThrow
+   */
+  export type ClickEventFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClickEvent
+     */
+    select?: ClickEventSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClickEvent
+     */
+    omit?: ClickEventOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClickEventInclude<ExtArgs> | null
+    /**
+     * Filter, which ClickEvent to fetch.
+     */
+    where?: ClickEventWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ClickEvents to fetch.
+     */
+    orderBy?: ClickEventOrderByWithRelationInput | ClickEventOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ClickEvents.
+     */
+    cursor?: ClickEventWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ClickEvents from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ClickEvents.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ClickEvents.
+     */
+    distinct?: ClickEventScalarFieldEnum | ClickEventScalarFieldEnum[]
+  }
+
+  /**
+   * ClickEvent findMany
+   */
+  export type ClickEventFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClickEvent
+     */
+    select?: ClickEventSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClickEvent
+     */
+    omit?: ClickEventOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClickEventInclude<ExtArgs> | null
+    /**
+     * Filter, which ClickEvents to fetch.
+     */
+    where?: ClickEventWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ClickEvents to fetch.
+     */
+    orderBy?: ClickEventOrderByWithRelationInput | ClickEventOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing ClickEvents.
+     */
+    cursor?: ClickEventWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ClickEvents from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ClickEvents.
+     */
+    skip?: number
+    distinct?: ClickEventScalarFieldEnum | ClickEventScalarFieldEnum[]
+  }
+
+  /**
+   * ClickEvent create
+   */
+  export type ClickEventCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClickEvent
+     */
+    select?: ClickEventSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClickEvent
+     */
+    omit?: ClickEventOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClickEventInclude<ExtArgs> | null
+    /**
+     * The data needed to create a ClickEvent.
+     */
+    data: XOR<ClickEventCreateInput, ClickEventUncheckedCreateInput>
+  }
+
+  /**
+   * ClickEvent createMany
+   */
+  export type ClickEventCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many ClickEvents.
+     */
+    data: ClickEventCreateManyInput | ClickEventCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * ClickEvent createManyAndReturn
+   */
+  export type ClickEventCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClickEvent
+     */
+    select?: ClickEventSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClickEvent
+     */
+    omit?: ClickEventOmit<ExtArgs> | null
+    /**
+     * The data used to create many ClickEvents.
+     */
+    data: ClickEventCreateManyInput | ClickEventCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClickEventIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * ClickEvent update
+   */
+  export type ClickEventUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClickEvent
+     */
+    select?: ClickEventSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClickEvent
+     */
+    omit?: ClickEventOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClickEventInclude<ExtArgs> | null
+    /**
+     * The data needed to update a ClickEvent.
+     */
+    data: XOR<ClickEventUpdateInput, ClickEventUncheckedUpdateInput>
+    /**
+     * Choose, which ClickEvent to update.
+     */
+    where: ClickEventWhereUniqueInput
+  }
+
+  /**
+   * ClickEvent updateMany
+   */
+  export type ClickEventUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update ClickEvents.
+     */
+    data: XOR<ClickEventUpdateManyMutationInput, ClickEventUncheckedUpdateManyInput>
+    /**
+     * Filter which ClickEvents to update
+     */
+    where?: ClickEventWhereInput
+    /**
+     * Limit how many ClickEvents to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * ClickEvent updateManyAndReturn
+   */
+  export type ClickEventUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClickEvent
+     */
+    select?: ClickEventSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClickEvent
+     */
+    omit?: ClickEventOmit<ExtArgs> | null
+    /**
+     * The data used to update ClickEvents.
+     */
+    data: XOR<ClickEventUpdateManyMutationInput, ClickEventUncheckedUpdateManyInput>
+    /**
+     * Filter which ClickEvents to update
+     */
+    where?: ClickEventWhereInput
+    /**
+     * Limit how many ClickEvents to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClickEventIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * ClickEvent upsert
+   */
+  export type ClickEventUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClickEvent
+     */
+    select?: ClickEventSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClickEvent
+     */
+    omit?: ClickEventOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClickEventInclude<ExtArgs> | null
+    /**
+     * The filter to search for the ClickEvent to update in case it exists.
+     */
+    where: ClickEventWhereUniqueInput
+    /**
+     * In case the ClickEvent found by the `where` argument doesn't exist, create a new ClickEvent with this data.
+     */
+    create: XOR<ClickEventCreateInput, ClickEventUncheckedCreateInput>
+    /**
+     * In case the ClickEvent was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<ClickEventUpdateInput, ClickEventUncheckedUpdateInput>
+  }
+
+  /**
+   * ClickEvent delete
+   */
+  export type ClickEventDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClickEvent
+     */
+    select?: ClickEventSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClickEvent
+     */
+    omit?: ClickEventOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClickEventInclude<ExtArgs> | null
+    /**
+     * Filter which ClickEvent to delete.
+     */
+    where: ClickEventWhereUniqueInput
+  }
+
+  /**
+   * ClickEvent deleteMany
+   */
+  export type ClickEventDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ClickEvents to delete
+     */
+    where?: ClickEventWhereInput
+    /**
+     * Limit how many ClickEvents to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * ClickEvent without action
+   */
+  export type ClickEventDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClickEvent
+     */
+    select?: ClickEventSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClickEvent
+     */
+    omit?: ClickEventOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClickEventInclude<ExtArgs> | null
   }
 
 
@@ -1903,15 +4423,41 @@ export namespace Prisma {
   export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof typeof TransactionIsolationLevel]
 
 
+  export const UserScalarFieldEnum: {
+    id: 'id',
+    email: 'email',
+    password: 'password',
+    name: 'name',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
+
+
   export const UrlScalarFieldEnum: {
     id: 'id',
     originalUrl: 'originalUrl',
     shortCode: 'shortCode',
+    userId: 'userId',
+    visits: 'visits',
+    isActive: 'isActive',
+    expiresAt: 'expiresAt',
+    maxClicks: 'maxClicks',
     createdAt: 'createdAt',
-    visits: 'visits'
+    updatedAt: 'updatedAt'
   };
 
   export type UrlScalarFieldEnum = (typeof UrlScalarFieldEnum)[keyof typeof UrlScalarFieldEnum]
+
+
+  export const ClickEventScalarFieldEnum: {
+    id: 'id',
+    urlId: 'urlId',
+    createdAt: 'createdAt'
+  };
+
+  export type ClickEventScalarFieldEnum = (typeof ClickEventScalarFieldEnum)[keyof typeof ClickEventScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -1928,6 +4474,14 @@ export namespace Prisma {
   };
 
   export type QueryMode = (typeof QueryMode)[keyof typeof QueryMode]
+
+
+  export const NullsOrder: {
+    first: 'first',
+    last: 'last'
+  };
+
+  export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
 
 
   /**
@@ -1978,6 +4532,13 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'Boolean'
+   */
+  export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
+    
+
+
+  /**
    * Reference to a field of type 'Float'
    */
   export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
@@ -1994,6 +4555,66 @@ export namespace Prisma {
    */
 
 
+  export type UserWhereInput = {
+    AND?: UserWhereInput | UserWhereInput[]
+    OR?: UserWhereInput[]
+    NOT?: UserWhereInput | UserWhereInput[]
+    id?: StringFilter<"User"> | string
+    email?: StringFilter<"User"> | string
+    password?: StringFilter<"User"> | string
+    name?: StringNullableFilter<"User"> | string | null
+    createdAt?: DateTimeFilter<"User"> | Date | string
+    updatedAt?: DateTimeFilter<"User"> | Date | string
+    urls?: UrlListRelationFilter
+  }
+
+  export type UserOrderByWithRelationInput = {
+    id?: SortOrder
+    email?: SortOrder
+    password?: SortOrder
+    name?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    urls?: UrlOrderByRelationAggregateInput
+  }
+
+  export type UserWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    email?: string
+    AND?: UserWhereInput | UserWhereInput[]
+    OR?: UserWhereInput[]
+    NOT?: UserWhereInput | UserWhereInput[]
+    password?: StringFilter<"User"> | string
+    name?: StringNullableFilter<"User"> | string | null
+    createdAt?: DateTimeFilter<"User"> | Date | string
+    updatedAt?: DateTimeFilter<"User"> | Date | string
+    urls?: UrlListRelationFilter
+  }, "id" | "email">
+
+  export type UserOrderByWithAggregationInput = {
+    id?: SortOrder
+    email?: SortOrder
+    password?: SortOrder
+    name?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: UserCountOrderByAggregateInput
+    _max?: UserMaxOrderByAggregateInput
+    _min?: UserMinOrderByAggregateInput
+  }
+
+  export type UserScalarWhereWithAggregatesInput = {
+    AND?: UserScalarWhereWithAggregatesInput | UserScalarWhereWithAggregatesInput[]
+    OR?: UserScalarWhereWithAggregatesInput[]
+    NOT?: UserScalarWhereWithAggregatesInput | UserScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"User"> | string
+    email?: StringWithAggregatesFilter<"User"> | string
+    password?: StringWithAggregatesFilter<"User"> | string
+    name?: StringNullableWithAggregatesFilter<"User"> | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
+  }
+
   export type UrlWhereInput = {
     AND?: UrlWhereInput | UrlWhereInput[]
     OR?: UrlWhereInput[]
@@ -2001,16 +4622,30 @@ export namespace Prisma {
     id?: StringFilter<"Url"> | string
     originalUrl?: StringFilter<"Url"> | string
     shortCode?: StringFilter<"Url"> | string
-    createdAt?: DateTimeFilter<"Url"> | Date | string
+    userId?: StringFilter<"Url"> | string
     visits?: IntFilter<"Url"> | number
+    isActive?: BoolFilter<"Url"> | boolean
+    expiresAt?: DateTimeNullableFilter<"Url"> | Date | string | null
+    maxClicks?: IntNullableFilter<"Url"> | number | null
+    createdAt?: DateTimeFilter<"Url"> | Date | string
+    updatedAt?: DateTimeFilter<"Url"> | Date | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    clickEvents?: ClickEventListRelationFilter
   }
 
   export type UrlOrderByWithRelationInput = {
     id?: SortOrder
     originalUrl?: SortOrder
     shortCode?: SortOrder
-    createdAt?: SortOrder
+    userId?: SortOrder
     visits?: SortOrder
+    isActive?: SortOrder
+    expiresAt?: SortOrderInput | SortOrder
+    maxClicks?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    user?: UserOrderByWithRelationInput
+    clickEvents?: ClickEventOrderByRelationAggregateInput
   }
 
   export type UrlWhereUniqueInput = Prisma.AtLeast<{
@@ -2020,16 +4655,28 @@ export namespace Prisma {
     OR?: UrlWhereInput[]
     NOT?: UrlWhereInput | UrlWhereInput[]
     originalUrl?: StringFilter<"Url"> | string
-    createdAt?: DateTimeFilter<"Url"> | Date | string
+    userId?: StringFilter<"Url"> | string
     visits?: IntFilter<"Url"> | number
+    isActive?: BoolFilter<"Url"> | boolean
+    expiresAt?: DateTimeNullableFilter<"Url"> | Date | string | null
+    maxClicks?: IntNullableFilter<"Url"> | number | null
+    createdAt?: DateTimeFilter<"Url"> | Date | string
+    updatedAt?: DateTimeFilter<"Url"> | Date | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    clickEvents?: ClickEventListRelationFilter
   }, "id" | "shortCode">
 
   export type UrlOrderByWithAggregationInput = {
     id?: SortOrder
     originalUrl?: SortOrder
     shortCode?: SortOrder
-    createdAt?: SortOrder
+    userId?: SortOrder
     visits?: SortOrder
+    isActive?: SortOrder
+    expiresAt?: SortOrderInput | SortOrder
+    maxClicks?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
     _count?: UrlCountOrderByAggregateInput
     _avg?: UrlAvgOrderByAggregateInput
     _max?: UrlMaxOrderByAggregateInput
@@ -2044,64 +4691,260 @@ export namespace Prisma {
     id?: StringWithAggregatesFilter<"Url"> | string
     originalUrl?: StringWithAggregatesFilter<"Url"> | string
     shortCode?: StringWithAggregatesFilter<"Url"> | string
-    createdAt?: DateTimeWithAggregatesFilter<"Url"> | Date | string
+    userId?: StringWithAggregatesFilter<"Url"> | string
     visits?: IntWithAggregatesFilter<"Url"> | number
+    isActive?: BoolWithAggregatesFilter<"Url"> | boolean
+    expiresAt?: DateTimeNullableWithAggregatesFilter<"Url"> | Date | string | null
+    maxClicks?: IntNullableWithAggregatesFilter<"Url"> | number | null
+    createdAt?: DateTimeWithAggregatesFilter<"Url"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"Url"> | Date | string
+  }
+
+  export type ClickEventWhereInput = {
+    AND?: ClickEventWhereInput | ClickEventWhereInput[]
+    OR?: ClickEventWhereInput[]
+    NOT?: ClickEventWhereInput | ClickEventWhereInput[]
+    id?: StringFilter<"ClickEvent"> | string
+    urlId?: StringFilter<"ClickEvent"> | string
+    createdAt?: DateTimeFilter<"ClickEvent"> | Date | string
+    url?: XOR<UrlScalarRelationFilter, UrlWhereInput>
+  }
+
+  export type ClickEventOrderByWithRelationInput = {
+    id?: SortOrder
+    urlId?: SortOrder
+    createdAt?: SortOrder
+    url?: UrlOrderByWithRelationInput
+  }
+
+  export type ClickEventWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: ClickEventWhereInput | ClickEventWhereInput[]
+    OR?: ClickEventWhereInput[]
+    NOT?: ClickEventWhereInput | ClickEventWhereInput[]
+    urlId?: StringFilter<"ClickEvent"> | string
+    createdAt?: DateTimeFilter<"ClickEvent"> | Date | string
+    url?: XOR<UrlScalarRelationFilter, UrlWhereInput>
+  }, "id">
+
+  export type ClickEventOrderByWithAggregationInput = {
+    id?: SortOrder
+    urlId?: SortOrder
+    createdAt?: SortOrder
+    _count?: ClickEventCountOrderByAggregateInput
+    _max?: ClickEventMaxOrderByAggregateInput
+    _min?: ClickEventMinOrderByAggregateInput
+  }
+
+  export type ClickEventScalarWhereWithAggregatesInput = {
+    AND?: ClickEventScalarWhereWithAggregatesInput | ClickEventScalarWhereWithAggregatesInput[]
+    OR?: ClickEventScalarWhereWithAggregatesInput[]
+    NOT?: ClickEventScalarWhereWithAggregatesInput | ClickEventScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"ClickEvent"> | string
+    urlId?: StringWithAggregatesFilter<"ClickEvent"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"ClickEvent"> | Date | string
+  }
+
+  export type UserCreateInput = {
+    id?: string
+    email: string
+    password: string
+    name?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    urls?: UrlCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateInput = {
+    id?: string
+    email: string
+    password: string
+    name?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    urls?: UrlUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    urls?: UrlUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    urls?: UrlUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserCreateManyInput = {
+    id?: string
+    email: string
+    password: string
+    name?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type UserUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type UrlCreateInput = {
     id?: string
     originalUrl: string
     shortCode: string
-    createdAt?: Date | string
     visits?: number
+    isActive?: boolean
+    expiresAt?: Date | string | null
+    maxClicks?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    user: UserCreateNestedOneWithoutUrlsInput
+    clickEvents?: ClickEventCreateNestedManyWithoutUrlInput
   }
 
   export type UrlUncheckedCreateInput = {
     id?: string
     originalUrl: string
     shortCode: string
-    createdAt?: Date | string
+    userId: string
     visits?: number
+    isActive?: boolean
+    expiresAt?: Date | string | null
+    maxClicks?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    clickEvents?: ClickEventUncheckedCreateNestedManyWithoutUrlInput
   }
 
   export type UrlUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     originalUrl?: StringFieldUpdateOperationsInput | string
     shortCode?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     visits?: IntFieldUpdateOperationsInput | number
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    expiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    maxClicks?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutUrlsNestedInput
+    clickEvents?: ClickEventUpdateManyWithoutUrlNestedInput
   }
 
   export type UrlUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     originalUrl?: StringFieldUpdateOperationsInput | string
     shortCode?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    userId?: StringFieldUpdateOperationsInput | string
     visits?: IntFieldUpdateOperationsInput | number
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    expiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    maxClicks?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    clickEvents?: ClickEventUncheckedUpdateManyWithoutUrlNestedInput
   }
 
   export type UrlCreateManyInput = {
     id?: string
     originalUrl: string
     shortCode: string
-    createdAt?: Date | string
+    userId: string
     visits?: number
+    isActive?: boolean
+    expiresAt?: Date | string | null
+    maxClicks?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
   }
 
   export type UrlUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
     originalUrl?: StringFieldUpdateOperationsInput | string
     shortCode?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     visits?: IntFieldUpdateOperationsInput | number
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    expiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    maxClicks?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type UrlUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
     originalUrl?: StringFieldUpdateOperationsInput | string
     shortCode?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    userId?: StringFieldUpdateOperationsInput | string
     visits?: IntFieldUpdateOperationsInput | number
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    expiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    maxClicks?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ClickEventCreateInput = {
+    id?: string
+    createdAt?: Date | string
+    url: UrlCreateNestedOneWithoutClickEventsInput
+  }
+
+  export type ClickEventUncheckedCreateInput = {
+    id?: string
+    urlId: string
+    createdAt?: Date | string
+  }
+
+  export type ClickEventUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    url?: UrlUpdateOneRequiredWithoutClickEventsNestedInput
+  }
+
+  export type ClickEventUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    urlId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ClickEventCreateManyInput = {
+    id?: string
+    urlId: string
+    createdAt?: Date | string
+  }
+
+  export type ClickEventUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ClickEventUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    urlId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type StringFilter<$PrismaModel = never> = {
@@ -2119,6 +4962,21 @@ export namespace Prisma {
     not?: NestedStringFilter<$PrismaModel> | string
   }
 
+  export type StringNullableFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    mode?: QueryMode
+    not?: NestedStringNullableFilter<$PrismaModel> | string | null
+  }
+
   export type DateTimeFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
@@ -2130,47 +4988,46 @@ export namespace Prisma {
     not?: NestedDateTimeFilter<$PrismaModel> | Date | string
   }
 
-  export type IntFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel>
-    in?: number[] | ListIntFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntFilter<$PrismaModel> | number
+  export type UrlListRelationFilter = {
+    every?: UrlWhereInput
+    some?: UrlWhereInput
+    none?: UrlWhereInput
   }
 
-  export type UrlCountOrderByAggregateInput = {
+  export type SortOrderInput = {
+    sort: SortOrder
+    nulls?: NullsOrder
+  }
+
+  export type UrlOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type UserCountOrderByAggregateInput = {
     id?: SortOrder
-    originalUrl?: SortOrder
-    shortCode?: SortOrder
+    email?: SortOrder
+    password?: SortOrder
+    name?: SortOrder
     createdAt?: SortOrder
-    visits?: SortOrder
+    updatedAt?: SortOrder
   }
 
-  export type UrlAvgOrderByAggregateInput = {
-    visits?: SortOrder
-  }
-
-  export type UrlMaxOrderByAggregateInput = {
+  export type UserMaxOrderByAggregateInput = {
     id?: SortOrder
-    originalUrl?: SortOrder
-    shortCode?: SortOrder
+    email?: SortOrder
+    password?: SortOrder
+    name?: SortOrder
     createdAt?: SortOrder
-    visits?: SortOrder
+    updatedAt?: SortOrder
   }
 
-  export type UrlMinOrderByAggregateInput = {
+  export type UserMinOrderByAggregateInput = {
     id?: SortOrder
-    originalUrl?: SortOrder
-    shortCode?: SortOrder
+    email?: SortOrder
+    password?: SortOrder
+    name?: SortOrder
     createdAt?: SortOrder
-    visits?: SortOrder
-  }
-
-  export type UrlSumOrderByAggregateInput = {
-    visits?: SortOrder
+    updatedAt?: SortOrder
   }
 
   export type StringWithAggregatesFilter<$PrismaModel = never> = {
@@ -2191,6 +5048,24 @@ export namespace Prisma {
     _max?: NestedStringFilter<$PrismaModel>
   }
 
+  export type StringNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    mode?: QueryMode
+    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedStringNullableFilter<$PrismaModel>
+    _max?: NestedStringNullableFilter<$PrismaModel>
+  }
+
   export type DateTimeWithAggregatesFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
@@ -2203,6 +5078,108 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedDateTimeFilter<$PrismaModel>
     _max?: NestedDateTimeFilter<$PrismaModel>
+  }
+
+  export type IntFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntFilter<$PrismaModel> | number
+  }
+
+  export type BoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
+  }
+
+  export type DateTimeNullableFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
+  }
+
+  export type IntNullableFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableFilter<$PrismaModel> | number | null
+  }
+
+  export type UserScalarRelationFilter = {
+    is?: UserWhereInput
+    isNot?: UserWhereInput
+  }
+
+  export type ClickEventListRelationFilter = {
+    every?: ClickEventWhereInput
+    some?: ClickEventWhereInput
+    none?: ClickEventWhereInput
+  }
+
+  export type ClickEventOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type UrlCountOrderByAggregateInput = {
+    id?: SortOrder
+    originalUrl?: SortOrder
+    shortCode?: SortOrder
+    userId?: SortOrder
+    visits?: SortOrder
+    isActive?: SortOrder
+    expiresAt?: SortOrder
+    maxClicks?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type UrlAvgOrderByAggregateInput = {
+    visits?: SortOrder
+    maxClicks?: SortOrder
+  }
+
+  export type UrlMaxOrderByAggregateInput = {
+    id?: SortOrder
+    originalUrl?: SortOrder
+    shortCode?: SortOrder
+    userId?: SortOrder
+    visits?: SortOrder
+    isActive?: SortOrder
+    expiresAt?: SortOrder
+    maxClicks?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type UrlMinOrderByAggregateInput = {
+    id?: SortOrder
+    originalUrl?: SortOrder
+    shortCode?: SortOrder
+    userId?: SortOrder
+    visits?: SortOrder
+    isActive?: SortOrder
+    expiresAt?: SortOrder
+    maxClicks?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type UrlSumOrderByAggregateInput = {
+    visits?: SortOrder
+    maxClicks?: SortOrder
   }
 
   export type IntWithAggregatesFilter<$PrismaModel = never> = {
@@ -2221,12 +5198,139 @@ export namespace Prisma {
     _max?: NestedIntFilter<$PrismaModel>
   }
 
+  export type BoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
+  }
+
+  export type DateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedDateTimeNullableFilter<$PrismaModel>
+    _max?: NestedDateTimeNullableFilter<$PrismaModel>
+  }
+
+  export type IntNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedFloatNullableFilter<$PrismaModel>
+    _sum?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedIntNullableFilter<$PrismaModel>
+    _max?: NestedIntNullableFilter<$PrismaModel>
+  }
+
+  export type UrlScalarRelationFilter = {
+    is?: UrlWhereInput
+    isNot?: UrlWhereInput
+  }
+
+  export type ClickEventCountOrderByAggregateInput = {
+    id?: SortOrder
+    urlId?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type ClickEventMaxOrderByAggregateInput = {
+    id?: SortOrder
+    urlId?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type ClickEventMinOrderByAggregateInput = {
+    id?: SortOrder
+    urlId?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type UrlCreateNestedManyWithoutUserInput = {
+    create?: XOR<UrlCreateWithoutUserInput, UrlUncheckedCreateWithoutUserInput> | UrlCreateWithoutUserInput[] | UrlUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: UrlCreateOrConnectWithoutUserInput | UrlCreateOrConnectWithoutUserInput[]
+    createMany?: UrlCreateManyUserInputEnvelope
+    connect?: UrlWhereUniqueInput | UrlWhereUniqueInput[]
+  }
+
+  export type UrlUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<UrlCreateWithoutUserInput, UrlUncheckedCreateWithoutUserInput> | UrlCreateWithoutUserInput[] | UrlUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: UrlCreateOrConnectWithoutUserInput | UrlCreateOrConnectWithoutUserInput[]
+    createMany?: UrlCreateManyUserInputEnvelope
+    connect?: UrlWhereUniqueInput | UrlWhereUniqueInput[]
+  }
+
   export type StringFieldUpdateOperationsInput = {
     set?: string
   }
 
+  export type NullableStringFieldUpdateOperationsInput = {
+    set?: string | null
+  }
+
   export type DateTimeFieldUpdateOperationsInput = {
     set?: Date | string
+  }
+
+  export type UrlUpdateManyWithoutUserNestedInput = {
+    create?: XOR<UrlCreateWithoutUserInput, UrlUncheckedCreateWithoutUserInput> | UrlCreateWithoutUserInput[] | UrlUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: UrlCreateOrConnectWithoutUserInput | UrlCreateOrConnectWithoutUserInput[]
+    upsert?: UrlUpsertWithWhereUniqueWithoutUserInput | UrlUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: UrlCreateManyUserInputEnvelope
+    set?: UrlWhereUniqueInput | UrlWhereUniqueInput[]
+    disconnect?: UrlWhereUniqueInput | UrlWhereUniqueInput[]
+    delete?: UrlWhereUniqueInput | UrlWhereUniqueInput[]
+    connect?: UrlWhereUniqueInput | UrlWhereUniqueInput[]
+    update?: UrlUpdateWithWhereUniqueWithoutUserInput | UrlUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: UrlUpdateManyWithWhereWithoutUserInput | UrlUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: UrlScalarWhereInput | UrlScalarWhereInput[]
+  }
+
+  export type UrlUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<UrlCreateWithoutUserInput, UrlUncheckedCreateWithoutUserInput> | UrlCreateWithoutUserInput[] | UrlUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: UrlCreateOrConnectWithoutUserInput | UrlCreateOrConnectWithoutUserInput[]
+    upsert?: UrlUpsertWithWhereUniqueWithoutUserInput | UrlUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: UrlCreateManyUserInputEnvelope
+    set?: UrlWhereUniqueInput | UrlWhereUniqueInput[]
+    disconnect?: UrlWhereUniqueInput | UrlWhereUniqueInput[]
+    delete?: UrlWhereUniqueInput | UrlWhereUniqueInput[]
+    connect?: UrlWhereUniqueInput | UrlWhereUniqueInput[]
+    update?: UrlUpdateWithWhereUniqueWithoutUserInput | UrlUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: UrlUpdateManyWithWhereWithoutUserInput | UrlUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: UrlScalarWhereInput | UrlScalarWhereInput[]
+  }
+
+  export type UserCreateNestedOneWithoutUrlsInput = {
+    create?: XOR<UserCreateWithoutUrlsInput, UserUncheckedCreateWithoutUrlsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutUrlsInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type ClickEventCreateNestedManyWithoutUrlInput = {
+    create?: XOR<ClickEventCreateWithoutUrlInput, ClickEventUncheckedCreateWithoutUrlInput> | ClickEventCreateWithoutUrlInput[] | ClickEventUncheckedCreateWithoutUrlInput[]
+    connectOrCreate?: ClickEventCreateOrConnectWithoutUrlInput | ClickEventCreateOrConnectWithoutUrlInput[]
+    createMany?: ClickEventCreateManyUrlInputEnvelope
+    connect?: ClickEventWhereUniqueInput | ClickEventWhereUniqueInput[]
+  }
+
+  export type ClickEventUncheckedCreateNestedManyWithoutUrlInput = {
+    create?: XOR<ClickEventCreateWithoutUrlInput, ClickEventUncheckedCreateWithoutUrlInput> | ClickEventCreateWithoutUrlInput[] | ClickEventUncheckedCreateWithoutUrlInput[]
+    connectOrCreate?: ClickEventCreateOrConnectWithoutUrlInput | ClickEventCreateOrConnectWithoutUrlInput[]
+    createMany?: ClickEventCreateManyUrlInputEnvelope
+    connect?: ClickEventWhereUniqueInput | ClickEventWhereUniqueInput[]
   }
 
   export type IntFieldUpdateOperationsInput = {
@@ -2235,6 +5339,72 @@ export namespace Prisma {
     decrement?: number
     multiply?: number
     divide?: number
+  }
+
+  export type BoolFieldUpdateOperationsInput = {
+    set?: boolean
+  }
+
+  export type NullableDateTimeFieldUpdateOperationsInput = {
+    set?: Date | string | null
+  }
+
+  export type NullableIntFieldUpdateOperationsInput = {
+    set?: number | null
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
+  }
+
+  export type UserUpdateOneRequiredWithoutUrlsNestedInput = {
+    create?: XOR<UserCreateWithoutUrlsInput, UserUncheckedCreateWithoutUrlsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutUrlsInput
+    upsert?: UserUpsertWithoutUrlsInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutUrlsInput, UserUpdateWithoutUrlsInput>, UserUncheckedUpdateWithoutUrlsInput>
+  }
+
+  export type ClickEventUpdateManyWithoutUrlNestedInput = {
+    create?: XOR<ClickEventCreateWithoutUrlInput, ClickEventUncheckedCreateWithoutUrlInput> | ClickEventCreateWithoutUrlInput[] | ClickEventUncheckedCreateWithoutUrlInput[]
+    connectOrCreate?: ClickEventCreateOrConnectWithoutUrlInput | ClickEventCreateOrConnectWithoutUrlInput[]
+    upsert?: ClickEventUpsertWithWhereUniqueWithoutUrlInput | ClickEventUpsertWithWhereUniqueWithoutUrlInput[]
+    createMany?: ClickEventCreateManyUrlInputEnvelope
+    set?: ClickEventWhereUniqueInput | ClickEventWhereUniqueInput[]
+    disconnect?: ClickEventWhereUniqueInput | ClickEventWhereUniqueInput[]
+    delete?: ClickEventWhereUniqueInput | ClickEventWhereUniqueInput[]
+    connect?: ClickEventWhereUniqueInput | ClickEventWhereUniqueInput[]
+    update?: ClickEventUpdateWithWhereUniqueWithoutUrlInput | ClickEventUpdateWithWhereUniqueWithoutUrlInput[]
+    updateMany?: ClickEventUpdateManyWithWhereWithoutUrlInput | ClickEventUpdateManyWithWhereWithoutUrlInput[]
+    deleteMany?: ClickEventScalarWhereInput | ClickEventScalarWhereInput[]
+  }
+
+  export type ClickEventUncheckedUpdateManyWithoutUrlNestedInput = {
+    create?: XOR<ClickEventCreateWithoutUrlInput, ClickEventUncheckedCreateWithoutUrlInput> | ClickEventCreateWithoutUrlInput[] | ClickEventUncheckedCreateWithoutUrlInput[]
+    connectOrCreate?: ClickEventCreateOrConnectWithoutUrlInput | ClickEventCreateOrConnectWithoutUrlInput[]
+    upsert?: ClickEventUpsertWithWhereUniqueWithoutUrlInput | ClickEventUpsertWithWhereUniqueWithoutUrlInput[]
+    createMany?: ClickEventCreateManyUrlInputEnvelope
+    set?: ClickEventWhereUniqueInput | ClickEventWhereUniqueInput[]
+    disconnect?: ClickEventWhereUniqueInput | ClickEventWhereUniqueInput[]
+    delete?: ClickEventWhereUniqueInput | ClickEventWhereUniqueInput[]
+    connect?: ClickEventWhereUniqueInput | ClickEventWhereUniqueInput[]
+    update?: ClickEventUpdateWithWhereUniqueWithoutUrlInput | ClickEventUpdateWithWhereUniqueWithoutUrlInput[]
+    updateMany?: ClickEventUpdateManyWithWhereWithoutUrlInput | ClickEventUpdateManyWithWhereWithoutUrlInput[]
+    deleteMany?: ClickEventScalarWhereInput | ClickEventScalarWhereInput[]
+  }
+
+  export type UrlCreateNestedOneWithoutClickEventsInput = {
+    create?: XOR<UrlCreateWithoutClickEventsInput, UrlUncheckedCreateWithoutClickEventsInput>
+    connectOrCreate?: UrlCreateOrConnectWithoutClickEventsInput
+    connect?: UrlWhereUniqueInput
+  }
+
+  export type UrlUpdateOneRequiredWithoutClickEventsNestedInput = {
+    create?: XOR<UrlCreateWithoutClickEventsInput, UrlUncheckedCreateWithoutClickEventsInput>
+    connectOrCreate?: UrlCreateOrConnectWithoutClickEventsInput
+    upsert?: UrlUpsertWithoutClickEventsInput
+    connect?: UrlWhereUniqueInput
+    update?: XOR<XOR<UrlUpdateToOneWithWhereWithoutClickEventsInput, UrlUpdateWithoutClickEventsInput>, UrlUncheckedUpdateWithoutClickEventsInput>
   }
 
   export type NestedStringFilter<$PrismaModel = never> = {
@@ -2251,6 +5421,20 @@ export namespace Prisma {
     not?: NestedStringFilter<$PrismaModel> | string
   }
 
+  export type NestedStringNullableFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedStringNullableFilter<$PrismaModel> | string | null
+  }
+
   export type NestedDateTimeFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
@@ -2260,17 +5444,6 @@ export namespace Prisma {
     gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     not?: NestedDateTimeFilter<$PrismaModel> | Date | string
-  }
-
-  export type NestedIntFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel>
-    in?: number[] | ListIntFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntFilter<$PrismaModel> | number
   }
 
   export type NestedStringWithAggregatesFilter<$PrismaModel = never> = {
@@ -2290,6 +5463,45 @@ export namespace Prisma {
     _max?: NestedStringFilter<$PrismaModel>
   }
 
+  export type NestedIntFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntFilter<$PrismaModel> | number
+  }
+
+  export type NestedStringNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedStringNullableFilter<$PrismaModel>
+    _max?: NestedStringNullableFilter<$PrismaModel>
+  }
+
+  export type NestedIntNullableFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableFilter<$PrismaModel> | number | null
+  }
+
   export type NestedDateTimeWithAggregatesFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
@@ -2302,6 +5514,22 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedDateTimeFilter<$PrismaModel>
     _max?: NestedDateTimeFilter<$PrismaModel>
+  }
+
+  export type NestedBoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
+  }
+
+  export type NestedDateTimeNullableFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
   }
 
   export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
@@ -2329,6 +5557,358 @@ export namespace Prisma {
     gt?: number | FloatFieldRefInput<$PrismaModel>
     gte?: number | FloatFieldRefInput<$PrismaModel>
     not?: NestedFloatFilter<$PrismaModel> | number
+  }
+
+  export type NestedBoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
+  }
+
+  export type NestedDateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedDateTimeNullableFilter<$PrismaModel>
+    _max?: NestedDateTimeNullableFilter<$PrismaModel>
+  }
+
+  export type NestedIntNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedFloatNullableFilter<$PrismaModel>
+    _sum?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedIntNullableFilter<$PrismaModel>
+    _max?: NestedIntNullableFilter<$PrismaModel>
+  }
+
+  export type NestedFloatNullableFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatNullableFilter<$PrismaModel> | number | null
+  }
+
+  export type UrlCreateWithoutUserInput = {
+    id?: string
+    originalUrl: string
+    shortCode: string
+    visits?: number
+    isActive?: boolean
+    expiresAt?: Date | string | null
+    maxClicks?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    clickEvents?: ClickEventCreateNestedManyWithoutUrlInput
+  }
+
+  export type UrlUncheckedCreateWithoutUserInput = {
+    id?: string
+    originalUrl: string
+    shortCode: string
+    visits?: number
+    isActive?: boolean
+    expiresAt?: Date | string | null
+    maxClicks?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    clickEvents?: ClickEventUncheckedCreateNestedManyWithoutUrlInput
+  }
+
+  export type UrlCreateOrConnectWithoutUserInput = {
+    where: UrlWhereUniqueInput
+    create: XOR<UrlCreateWithoutUserInput, UrlUncheckedCreateWithoutUserInput>
+  }
+
+  export type UrlCreateManyUserInputEnvelope = {
+    data: UrlCreateManyUserInput | UrlCreateManyUserInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type UrlUpsertWithWhereUniqueWithoutUserInput = {
+    where: UrlWhereUniqueInput
+    update: XOR<UrlUpdateWithoutUserInput, UrlUncheckedUpdateWithoutUserInput>
+    create: XOR<UrlCreateWithoutUserInput, UrlUncheckedCreateWithoutUserInput>
+  }
+
+  export type UrlUpdateWithWhereUniqueWithoutUserInput = {
+    where: UrlWhereUniqueInput
+    data: XOR<UrlUpdateWithoutUserInput, UrlUncheckedUpdateWithoutUserInput>
+  }
+
+  export type UrlUpdateManyWithWhereWithoutUserInput = {
+    where: UrlScalarWhereInput
+    data: XOR<UrlUpdateManyMutationInput, UrlUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type UrlScalarWhereInput = {
+    AND?: UrlScalarWhereInput | UrlScalarWhereInput[]
+    OR?: UrlScalarWhereInput[]
+    NOT?: UrlScalarWhereInput | UrlScalarWhereInput[]
+    id?: StringFilter<"Url"> | string
+    originalUrl?: StringFilter<"Url"> | string
+    shortCode?: StringFilter<"Url"> | string
+    userId?: StringFilter<"Url"> | string
+    visits?: IntFilter<"Url"> | number
+    isActive?: BoolFilter<"Url"> | boolean
+    expiresAt?: DateTimeNullableFilter<"Url"> | Date | string | null
+    maxClicks?: IntNullableFilter<"Url"> | number | null
+    createdAt?: DateTimeFilter<"Url"> | Date | string
+    updatedAt?: DateTimeFilter<"Url"> | Date | string
+  }
+
+  export type UserCreateWithoutUrlsInput = {
+    id?: string
+    email: string
+    password: string
+    name?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type UserUncheckedCreateWithoutUrlsInput = {
+    id?: string
+    email: string
+    password: string
+    name?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type UserCreateOrConnectWithoutUrlsInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutUrlsInput, UserUncheckedCreateWithoutUrlsInput>
+  }
+
+  export type ClickEventCreateWithoutUrlInput = {
+    id?: string
+    createdAt?: Date | string
+  }
+
+  export type ClickEventUncheckedCreateWithoutUrlInput = {
+    id?: string
+    createdAt?: Date | string
+  }
+
+  export type ClickEventCreateOrConnectWithoutUrlInput = {
+    where: ClickEventWhereUniqueInput
+    create: XOR<ClickEventCreateWithoutUrlInput, ClickEventUncheckedCreateWithoutUrlInput>
+  }
+
+  export type ClickEventCreateManyUrlInputEnvelope = {
+    data: ClickEventCreateManyUrlInput | ClickEventCreateManyUrlInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type UserUpsertWithoutUrlsInput = {
+    update: XOR<UserUpdateWithoutUrlsInput, UserUncheckedUpdateWithoutUrlsInput>
+    create: XOR<UserCreateWithoutUrlsInput, UserUncheckedCreateWithoutUrlsInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutUrlsInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutUrlsInput, UserUncheckedUpdateWithoutUrlsInput>
+  }
+
+  export type UserUpdateWithoutUrlsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserUncheckedUpdateWithoutUrlsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ClickEventUpsertWithWhereUniqueWithoutUrlInput = {
+    where: ClickEventWhereUniqueInput
+    update: XOR<ClickEventUpdateWithoutUrlInput, ClickEventUncheckedUpdateWithoutUrlInput>
+    create: XOR<ClickEventCreateWithoutUrlInput, ClickEventUncheckedCreateWithoutUrlInput>
+  }
+
+  export type ClickEventUpdateWithWhereUniqueWithoutUrlInput = {
+    where: ClickEventWhereUniqueInput
+    data: XOR<ClickEventUpdateWithoutUrlInput, ClickEventUncheckedUpdateWithoutUrlInput>
+  }
+
+  export type ClickEventUpdateManyWithWhereWithoutUrlInput = {
+    where: ClickEventScalarWhereInput
+    data: XOR<ClickEventUpdateManyMutationInput, ClickEventUncheckedUpdateManyWithoutUrlInput>
+  }
+
+  export type ClickEventScalarWhereInput = {
+    AND?: ClickEventScalarWhereInput | ClickEventScalarWhereInput[]
+    OR?: ClickEventScalarWhereInput[]
+    NOT?: ClickEventScalarWhereInput | ClickEventScalarWhereInput[]
+    id?: StringFilter<"ClickEvent"> | string
+    urlId?: StringFilter<"ClickEvent"> | string
+    createdAt?: DateTimeFilter<"ClickEvent"> | Date | string
+  }
+
+  export type UrlCreateWithoutClickEventsInput = {
+    id?: string
+    originalUrl: string
+    shortCode: string
+    visits?: number
+    isActive?: boolean
+    expiresAt?: Date | string | null
+    maxClicks?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    user: UserCreateNestedOneWithoutUrlsInput
+  }
+
+  export type UrlUncheckedCreateWithoutClickEventsInput = {
+    id?: string
+    originalUrl: string
+    shortCode: string
+    userId: string
+    visits?: number
+    isActive?: boolean
+    expiresAt?: Date | string | null
+    maxClicks?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type UrlCreateOrConnectWithoutClickEventsInput = {
+    where: UrlWhereUniqueInput
+    create: XOR<UrlCreateWithoutClickEventsInput, UrlUncheckedCreateWithoutClickEventsInput>
+  }
+
+  export type UrlUpsertWithoutClickEventsInput = {
+    update: XOR<UrlUpdateWithoutClickEventsInput, UrlUncheckedUpdateWithoutClickEventsInput>
+    create: XOR<UrlCreateWithoutClickEventsInput, UrlUncheckedCreateWithoutClickEventsInput>
+    where?: UrlWhereInput
+  }
+
+  export type UrlUpdateToOneWithWhereWithoutClickEventsInput = {
+    where?: UrlWhereInput
+    data: XOR<UrlUpdateWithoutClickEventsInput, UrlUncheckedUpdateWithoutClickEventsInput>
+  }
+
+  export type UrlUpdateWithoutClickEventsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    originalUrl?: StringFieldUpdateOperationsInput | string
+    shortCode?: StringFieldUpdateOperationsInput | string
+    visits?: IntFieldUpdateOperationsInput | number
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    expiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    maxClicks?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutUrlsNestedInput
+  }
+
+  export type UrlUncheckedUpdateWithoutClickEventsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    originalUrl?: StringFieldUpdateOperationsInput | string
+    shortCode?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    visits?: IntFieldUpdateOperationsInput | number
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    expiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    maxClicks?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UrlCreateManyUserInput = {
+    id?: string
+    originalUrl: string
+    shortCode: string
+    visits?: number
+    isActive?: boolean
+    expiresAt?: Date | string | null
+    maxClicks?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type UrlUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    originalUrl?: StringFieldUpdateOperationsInput | string
+    shortCode?: StringFieldUpdateOperationsInput | string
+    visits?: IntFieldUpdateOperationsInput | number
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    expiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    maxClicks?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    clickEvents?: ClickEventUpdateManyWithoutUrlNestedInput
+  }
+
+  export type UrlUncheckedUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    originalUrl?: StringFieldUpdateOperationsInput | string
+    shortCode?: StringFieldUpdateOperationsInput | string
+    visits?: IntFieldUpdateOperationsInput | number
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    expiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    maxClicks?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    clickEvents?: ClickEventUncheckedUpdateManyWithoutUrlNestedInput
+  }
+
+  export type UrlUncheckedUpdateManyWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    originalUrl?: StringFieldUpdateOperationsInput | string
+    shortCode?: StringFieldUpdateOperationsInput | string
+    visits?: IntFieldUpdateOperationsInput | number
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    expiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    maxClicks?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ClickEventCreateManyUrlInput = {
+    id?: string
+    createdAt?: Date | string
+  }
+
+  export type ClickEventUpdateWithoutUrlInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ClickEventUncheckedUpdateWithoutUrlInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ClickEventUncheckedUpdateManyWithoutUrlInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
 

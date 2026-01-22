@@ -1,44 +1,102 @@
+import { NextResponse } from "next/server";
 import prisma from "@/lib/db";
 import redis from "@/lib/redis";
-import { NextResponse } from "next/server";
+import { auth } from "@/middleware/auth";
+import { nanoid } from "nanoid";
 
-const CACHE_KEY = "recent_urls";
-const CACHE_TTL = 30 ; // 30 seconds
+const CACHE_TTL = 30;
 
-export async function GET() {
+/* =========================
+   GET: recent URLs
+   ========================= */
+export const GET = auth(async (req) => {
+  const userId = req.userId!;
+  const CACHE_KEY = `recent_urls:${userId}`;
+
+  const cached = await redis.get(CACHE_KEY);
+  if (cached) {
+    return NextResponse.json(JSON.parse(cached));
+  }
+
+  const urls = await prisma.url.findMany({
+    where: { userId },
+    orderBy: { createdAt: "desc" },
+    take: 5,
+  });
+
+  await redis.set(CACHE_KEY, JSON.stringify(urls), "EX", CACHE_TTL);
+  return NextResponse.json(urls);
+});
+
+/* =========================
+   POST: create URL
+   ========================= */
+export const POST = auth(async (req) => {
   try {
-    // 1️⃣ Check Redis cache first
-    const cached = await redis.get(CACHE_KEY);
-    if (cached) {
-      const parsed = JSON.parse(cached);
-      if (Array.isArray(parsed) && parsed.length > 0) {
-        return NextResponse.json(parsed);
-      }
+    const userId = req.userId!;
+    const body = await req.json();
+
+    const {
+      originalUrl,
+      shortCode,
+      expiresAt,
+      maxClicks,
+      isActive = true,
+    } = body;
+
+    if (!originalUrl) {
+      return NextResponse.json(
+        { message: "originalUrl is required" },
+        { status: 400 }
+      );
     }
 
-    // 2️⃣ Fetch from Prisma if cache miss or empty cache
-    const urls = await prisma.url.findMany({
-      orderBy: { createdAt: "desc" },
-      take: 5,
+    try {
+      new URL(originalUrl);
+    } catch {
+      return NextResponse.json(
+        { message: "Invalid URL format" },
+        { status: 400 }
+      );
+    }
+
+    const finalShortCode = shortCode?.trim() || nanoid(8);
+
+    const url = await prisma.url.create({
+      data: {
+        originalUrl,
+        shortCode: finalShortCode,
+        userId,
+        isActive,
+        expiresAt: expiresAt ? new Date(expiresAt) : null,
+        maxClicks: maxClicks ? Number(maxClicks) : null,
+      },
     });
 
-    // 3️⃣ Store in Redis only if we have data
-    if (urls.length > 0) {
-      await redis.set(CACHE_KEY, JSON.stringify(urls),"EX",CACHE_TTL);
+    // invalidate cache
+    await redis.del(`recent_urls:${userId}`);
+
+    // pre-warm redirect cache
+    await redis.set(
+      `url:${finalShortCode}`,
+      JSON.stringify(url),
+      "EX",
+      60 * 5
+    );
+
+    return NextResponse.json(url, { status: 201 });
+  } catch (error: any) {
+    if (error.code === "P2002") {
+      return NextResponse.json(
+        { message: "Short code already in use" },
+        { status: 409 }
+      );
     }
 
-    return NextResponse.json(urls);
-
-  } catch (err: any) {
-    if (err.code === "P2021") {
-      console.error("Table Url does not exist:", err);
-      return NextResponse.json({ error: "Database table missing" }, { status: 500 });
-    }
-    if (err.code === "P1001") {
-      console.error("Database connection error:", err);
-      return NextResponse.json({ error: "Cannot connect to database" }, { status: 500 });
-    }
-    console.error("Unexpected error:", err);
-    return NextResponse.json({ error: "Internal server error" }, { status: 500 });
+    console.error("POST /urls error:", error);
+    return NextResponse.json(
+      { message: "Internal server error" },
+      { status: 500 }
+    );
   }
-}
+});

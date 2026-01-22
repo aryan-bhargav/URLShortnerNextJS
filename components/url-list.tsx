@@ -8,32 +8,33 @@ import { CheckIcon, CopyIcon, EyeIcon } from "lucide-react";
 interface UrlI {
   id: string;
   shortCode: string;
-  originalUrl: string; 
-  visits: number;   
+  originalUrl: string;
+  visits: number;
 }
 
 const UrlList = () => {
   const [urls, setUrls] = useState<UrlI[]>([]);
-  const [copied, setCopied] = useState<boolean>(false);
+  const [copiedId, setCopiedId] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
 
-  // Ensure we remove trailing slash from env variable
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL?.replace(/\/$/, "");
+  const baseUrl =
+    process.env.NEXT_PUBLIC_BASE_URL?.replace(/\/$/, "") ||
+    window.location.origin;
 
-  const shortenUrlLinkGenerator = (shortCode: string) => {
-    return `${baseUrl}/${shortCode}`;
-  };
+  const shortLink = (shortCode: string) =>
+    `${baseUrl}/api/redirect/${shortCode}`;
 
-  const handleCopyUrl = (shortCode: string) => {
-    navigator.clipboard.writeText(shortenUrlLinkGenerator(shortCode)).then(() => {
-      setCopied(true);
-      setTimeout(() => setCopied(false), 3000);
-    });
+  const handleCopyUrl = async (shortCode: string, id: string) => {
+    await navigator.clipboard.writeText(shortLink(shortCode));
+    setCopiedId(id);
+    setTimeout(() => setCopiedId(null), 2000);
   };
 
   const fetchUrls = async () => {
     try {
-      const response = await fetch("/api/urls");
+      const response = await fetch("/api/urls", {
+        cache: "no-store",
+      });
       const data = await response.json();
       setUrls(data);
     } catch (error) {
@@ -48,39 +49,44 @@ const UrlList = () => {
   }, []);
 
   return (
-    <div className="w-full max-w-2xl mx-auto mt-8 p-6 rounded-xl">
-      <h2 className="text-xl font-semibold text-gray-800 mb-4">Recent URLs</h2>
+    <div className="w-full max-w-2xl mx-auto mt-8 p-6 rounded-xl glass">
+      <h2 className="text-xl font-semibold mb-4">Recent URLs</h2>
 
       {loading ? (
-        <p className="text-gray-500">Loading...</p>
+        <p className="text-gray-400">Loading...</p>
       ) : urls.length === 0 ? (
-        <p className="text-gray-500">No URLs found.</p>
+        <p className="text-gray-400">No URLs found.</p>
       ) : (
         <ul className="space-y-4">
           {urls.map((url) => (
             <li
               key={url.id}
-              className="flex items-center justify-between p-4 bg-gray-50 rounded-lg border border-gray-200 hover:shadow-sm transition"
+              className="flex items-center justify-between p-4 rounded-lg border border-white/10 hover:border-white/20 transition"
             >
               <Link
-                href={url.shortCode}
-                className="text-blue-600 hover:underline break-all"
+                href={`/api/redirect/${url.shortCode}`}
+                className="text-blue-400 hover:underline break-all"
                 target="_blank"
               >
-                {url.shortCode || url.originalUrl}
+                {url.shortCode}
               </Link>
 
-              <div className="flex items-center space-x-3">
+              <div className="flex items-center space-x-4">
                 <Button
                   variant="ghost"
                   size="icon"
-                  className="text-gray-600 hover:text-blue-600"
-                  onClick={() => handleCopyUrl(url.shortCode)}
+                  onClick={() => handleCopyUrl(url.shortCode, url.id)}
                 >
-                  {copied ? <CheckIcon /> : <CopyIcon className="w-4 h-4" />}
+                  {copiedId === url.id ? (
+                    <CheckIcon className="text-green-400" />
+                  ) : (
+                    <CopyIcon className="w-4 h-4" />
+                  )}
                 </Button>
-                <span className="flex items-center text-sm text-gray-500">
-                  <EyeIcon className="w-4 h-4 mr-1" /> {url.visits ?? 0} views
+
+                <span className="flex items-center text-sm text-gray-400">
+                  <EyeIcon className="w-4 h-4 mr-1" />
+                  {url.visits ?? 0}
                 </span>
               </div>
             </li>
