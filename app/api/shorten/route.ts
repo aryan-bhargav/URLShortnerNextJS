@@ -1,51 +1,36 @@
+import { NextResponse } from "next/server";
 import prisma from "@/lib/db";
-import redis from "@/lib/redis";
 import { nanoid } from "nanoid";
-import { NextRequest, NextResponse } from "next/server";
+import { auth } from "@/middleware/auth";
 
-export async function POST(request: NextRequest) {
+export const POST = auth(async (req) => {
   try {
-    const { url } = await request.json();
+    const { originalUrl } = await req.json();
+    const userId = req.userId!;
 
-    // 1️⃣ Validate URL
-    try {
-      new URL(url);
-    } catch {
-      return NextResponse.json({ error: "Invalid URL" }, { status: 400 });
+    if (!originalUrl) {
+      return NextResponse.json(
+        { message: "Original URL is required" },
+        { status: 400 }
+      );
     }
 
-    let shortenedUrl;
-    while (!shortenedUrl) {
-      const shortCode = nanoid(8); // 8-char unique code
+    const shortCode = nanoid(8);
 
-      try {
-        // 2️⃣ Save in Prisma
-        shortenedUrl = await prisma.url.create({
-          data: { originalUrl: url, shortCode },
-        });
+    const shortenedUrl = await prisma.url.create({
+      data: {
+        originalUrl,
+        shortCode,
+        userId, // ✅ REQUIRED FIX
+      },
+    });
 
-        // 3️⃣ Cache in Redis immediately
-        await redis.set(shortCode, url, "EX", 60 * 60 * 24); // 1 day TTL
-
-      } catch (err: any) {
-        // Handle Prisma unique constraint error
-        if (err.code === "P2002") continue; // collision, retry
-        if (err.code === "P2021") {
-          console.error("Table Url does not exist:", err);
-          return NextResponse.json({ error: "Database table missing" }, { status: 500 });
-        }
-        if (err.code === "P1001") {
-          console.error("Database connection error:", err);
-          return NextResponse.json({ error: "Cannot connect to database" }, { status: 500 });
-        }
-        throw err;
-      }
-    }
-
-    return NextResponse.json({ shortCode: shortenedUrl.shortCode });
-
-  } catch (err) {
-    console.error("Unexpected server error:", err);
-    return NextResponse.json({ error: "Internal server error" }, { status: 500 });
+    return NextResponse.json(shortenedUrl, { status: 201 });
+  } catch (error) {
+    console.error("Shorten error:", error);
+    return NextResponse.json(
+      { message: "Internal server error" },
+      { status: 500 }
+    );
   }
-}
+});
