@@ -52,8 +52,10 @@ export default function DashboardContainer() {
 
     return (
         <div className="space-y-10">
-            <CreateLinkForm onSuccess={fetchLinks} />
-            <StatsBar links={links} />
+            <div className="flex flex-row">
+                <CreateLinkForm onSuccess={fetchLinks} />
+                <StatsBar links={links} />
+            </div>
             <LinksTable links={links} loading={loading} />
         </div>
 

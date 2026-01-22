@@ -1,16 +1,18 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { DashboardLink } from "./dashboard-container";
 
-export default function LinkRow({
-  link,
-}: {
-  link: DashboardLink;
-}) {
+export default function LinkRow({ link }: { link: DashboardLink }) {
   const [copied, setCopied] = useState(false);
+  const [origin, setOrigin] = useState("");
 
-  const shortUrl = `${window.location.origin}/api/redirect/${link.shortCode}`;
+  // ✅ SSR-safe origin
+  useEffect(() => {
+    setOrigin(window.location.origin);
+  }, []);
+
+  const shortUrl = `${origin}/${link.shortCode}`;
 
   const handleCopy = async () => {
     await navigator.clipboard.writeText(shortUrl);
@@ -19,7 +21,7 @@ export default function LinkRow({
   };
 
   return (
-    <div className="grid grid-cols-4 px-4 py-3 items-center border-b border-white/10 text-sm">
+    <div className="grid grid-cols-1 md:grid-cols-4 gap-2 md:gap-0 px-4 py-4 border-b border-white/10 text-sm">
       {/* Short link */}
       <a
         href={`/api/redirect/${link.shortCode}`}
@@ -40,26 +42,21 @@ export default function LinkRow({
       </span>
 
       {/* Status + actions */}
-      <div className="flex items-center gap-3">
+      <div className="flex items-center justify-between md:justify-start gap-3">
         <span
-          className={`text-xs px-2 py-1 rounded ${link.isActive
+          className={`text-xs px-2 py-1 rounded ${
+            link.isActive
               ? "bg-green-500/20 text-green-400"
               : "bg-red-500/20 text-red-400"
-            }`}
+          }`}
         >
           {link.isActive ? "Active" : "Inactive"}
         </span>
 
         <button
           onClick={handleCopy}
-          className="
-    text-xs
-    transition
-    hover:text-white
-    disabled:opacity-60
-  "
+          className="text-xs hover:text-white transition"
         >
-
           {copied ? "Copied!" : "Copy"}
         </button>
       </div>

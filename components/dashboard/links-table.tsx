@@ -7,10 +7,7 @@ interface LinksTableProps {
   loading: boolean;
 }
 
-export default function LinksTable({
-  links,
-  loading,
-}: LinksTableProps) {
+export default function LinksTable({ links, loading }: LinksTableProps) {
   if (loading) {
     return (
       <div className="glass rounded-xl p-6 space-y-4">
@@ -22,20 +19,18 @@ export default function LinksTable({
     );
   }
 
-
   if (links.length === 0) {
     return (
       <div className="glass rounded-xl p-6">
-        <p className="text-gray-400">
-          No links created yet.
-        </p>
+        <p className="text-gray-400">No links created yet.</p>
       </div>
     );
   }
 
   return (
     <div className="glass rounded-xl overflow-hidden">
-      <div className="grid grid-cols-4 px-4 py-3 text-sm text-gray-400 border-b border-white/10">
+      {/* Desktop header */}
+      <div className="hidden md:grid grid-cols-4 px-4 py-3 text-sm text-gray-400 border-b border-white/10">
         <span>Short Link</span>
         <span>Original URL</span>
         <span>Clicks</span>

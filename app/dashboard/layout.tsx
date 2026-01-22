@@ -13,8 +13,7 @@ export default function DashboardLayout({
 }) {
   return (
     <>
-      <Navbar />
-      <main className="min-h-screen bg-gradient-to-br from-[#050b18] to-[#0a1f44] px-6 py-10">
+      <main className="min-h-screen bg-gradient-to-br from-[#010204] to-[#000000] px-6 py-10">
         {children}
       </main>
     </>
