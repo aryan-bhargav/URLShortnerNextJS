@@ -44,6 +44,7 @@ async function incrementVisits(shortCode: string) {
   }
 }
 
+
 export async function GET(
   request: NextRequest,
   { params }: { params: Promise<{ shortCode: string }> }
@@ -57,6 +58,20 @@ export async function GET(
     const cached = await redis.get(CACHE_KEY);
     if (cached) {
       const url = JSON.parse(cached);
+
+      if (!isUrlValid(url)) {
+        return NextResponse.json(
+          { message: "Short URL expired or inactive" },
+          { status: 410 }
+        );
+      }
+
+      // Non-blocking increment
+      prisma.url.update({
+        where: { shortCode },
+        data: { visits: { increment: 1 } },
+      }).catch(() => {});
+
       return NextResponse.redirect(url.originalUrl);
     }
 
@@ -65,14 +80,14 @@ export async function GET(
       where: { shortCode },
     });
 
-    if (!url || !url.isActive) {
+    if (!url || !isUrlValid(url)) {
       return NextResponse.json(
         { message: "Short URL not found or inactive" },
         { status: 404 }
       );
     }
 
-    // 3️⃣ Cache
+    // 3️⃣ Cache valid result
     await redis.set(CACHE_KEY, JSON.stringify(url), "EX", CACHE_TTL);
 
     // 4️⃣ Increment visits (non-blocking)

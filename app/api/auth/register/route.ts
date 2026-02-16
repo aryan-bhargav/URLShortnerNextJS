@@ -5,6 +5,11 @@ import { cookies } from "next/headers";
 import prisma from "@/lib/db";
 import { signToken } from "@/lib/jwt";
 
+function isStrongPassword(password: string) {
+  return /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{8,}$/.test(password);
+}
+
+
 export async function POST(req: Request) {
   try {
     const { email, password, name } = await req.json();
@@ -15,6 +20,17 @@ export async function POST(req: Request) {
         { status: 400 }
       );
     }
+
+    if (!isStrongPassword(password)) {
+      return NextResponse.json(
+        {
+          message:
+            "Password must be at least 8 characters and include uppercase, lowercase, number, and special character",
+        },
+        { status: 400 }
+      );
+    }
+
 
     const existingUser = await prisma.user.findUnique({
       where: { email },
