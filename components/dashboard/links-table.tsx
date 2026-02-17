@@ -29,15 +29,17 @@ export default function LinksTable({ links, loading }: LinksTableProps) {
 
   return (
     <div className="glass rounded-xl overflow-hidden">
-      {/* Desktop Header - Hidden on mobile, visible from md and above */}
-      <div className="hidden md:grid grid-cols-4 px-4 py-3 text-xs md:text-sm lg:text-base text-gray-400 border-b border-white/10 bg-white/5">
+
+      {/* Desktop header — must use the EXACT same grid-cols as LinkRow's desktop row */}
+      <div className="hidden md:grid grid-cols-[1fr_2fr_0.5fr_1.5fr_1fr] items-center px-4 py-3 gap-x-4 text-xs text-gray-400 border-b border-white/10 bg-white/5">
         <span className="font-semibold">Short Link</span>
         <span className="font-semibold">Original URL</span>
         <span className="font-semibold">Clicks</span>
-        <span className="font-semibold">Status</span>
+        <span className="font-semibold">Expires At</span>
+        <span className="font-semibold text-right">Status</span>
       </div>
 
-      {/* Mobile: Card-based layout | Desktop: Grid layout */}
+      {/* Rows */}
       <div className="divide-y divide-white/10">
         {links.map((link) => (
           <LinkRow key={link.id} link={link} />

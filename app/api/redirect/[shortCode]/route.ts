@@ -49,36 +49,29 @@ export async function GET(
   request: NextRequest,
   { params }: { params: Promise<{ shortCode: string }> }
 ) {
+  const requestStart = performance.now(); // better than Date.now()
   const { shortCode } = await params;
 
   try {
     const CACHE_KEY = `url:${shortCode}`;
 
-    // 1️⃣ Redis first
     const cached = await redis.get(CACHE_KEY);
+
+    let url: Url | null = null;
+    let source = "cache";
+
     if (cached) {
-      const url = JSON.parse(cached);
-
-      if (!isUrlValid(url)) {
-        return NextResponse.json(
-          { message: "Short URL expired or inactive" },
-          { status: 410 }
-        );
-      }
-
-      // Non-blocking increment
-      prisma.url.update({
+      url = JSON.parse(cached);
+    } else {
+      source = "database";
+      url = await prisma.url.findUnique({
         where: { shortCode },
-        data: { visits: { increment: 1 } },
-      }).catch(() => {});
+      });
 
-      return NextResponse.redirect(url.originalUrl);
+      if (url) {
+        await redis.set(CACHE_KEY, JSON.stringify(url), "EX", CACHE_TTL);
+      }
     }
-
-    // 2️⃣ DB fallback
-    const url = await prisma.url.findUnique({
-      where: { shortCode },
-    });
 
     if (!url || !isUrlValid(url)) {
       return NextResponse.json(
@@ -87,16 +80,24 @@ export async function GET(
       );
     }
 
-    // 3️⃣ Cache valid result
-    await redis.set(CACHE_KEY, JSON.stringify(url), "EX", CACHE_TTL);
-
-    // 4️⃣ Increment visits (non-blocking)
+    // non-blocking visit increment
     prisma.url.update({
       where: { shortCode },
       data: { visits: { increment: 1 } },
     }).catch(() => {});
 
-    return NextResponse.redirect(url.originalUrl);
+    const requestEnd = performance.now();
+    const latency = Math.round(requestEnd - requestStart);
+
+    console.log(`Redirect (${source}) took ${latency}ms`);
+
+    const response = NextResponse.redirect(url.originalUrl);
+
+    // Optional: send latency in header for debugging
+    response.headers.set("X-Redirect-Time", `${latency}ms`);
+
+    return response;
+
   } catch (error) {
     console.error("Redirect error:", error);
     return NextResponse.json(

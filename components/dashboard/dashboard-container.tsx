@@ -28,13 +28,9 @@ export default function DashboardContainer() {
         setError("");
 
         try {
-            const res = await fetch("/api/urls", {
-                cache: "no-store",
-            });
+            const res = await fetch("/api/urls", {cache: "no-store",});
 
-            if (!res.ok) {
-                throw new Error("Failed to load links");
-            }
+            if (!res.ok) throw new Error("Failed to load links");
 
             const data = await res.json();
             setLinks(data);
