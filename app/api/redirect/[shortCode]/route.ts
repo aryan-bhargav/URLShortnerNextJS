@@ -28,28 +28,12 @@ function isUrlValid(url: {
   return true;
 }
 
-async function incrementVisits(shortCode: string) {
-  try {
-    await prisma.url.update({
-      where: { shortCode },
-      data: {
-        visits: { increment: 1 },
-        clickEvents: {
-          create: {},
-        },
-      },
-    });
-  } catch (err) {
-    console.error("Failed to increment visits:", err);
-  }
-}
-
 
 export async function GET(
   request: NextRequest,
   { params }: { params: Promise<{ shortCode: string }> }
 ) {
-  const requestStart = performance.now(); // better than Date.now()
+  const requestStart = performance.now(); // start fininhg performnace
   const { shortCode } = await params;
 
   try {
@@ -84,19 +68,18 @@ export async function GET(
     prisma.url.update({
       where: { shortCode },
       data: { visits: { increment: 1 } },
-    }).catch(() => {});
+    }).catch(() => { });
 
-    const requestEnd = performance.now();
+    const requestEnd = performance.now();   // finded the performance 
     const latency = Math.round(requestEnd - requestStart);
 
     console.log(`Redirect (${source}) took ${latency}ms`);
 
-    const response = NextResponse.redirect(url.originalUrl);
+    return NextResponse.json({
+      originalUrl: url.originalUrl,
+      latency: `${latency}ms`,
+    });
 
-    // Optional: send latency in header for debugging
-    response.headers.set("X-Redirect-Time", `${latency}ms`);
-
-    return response;
 
   } catch (error) {
     console.error("Redirect error:", error);

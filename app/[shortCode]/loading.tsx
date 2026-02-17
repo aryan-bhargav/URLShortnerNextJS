@@ -1,7 +1,3 @@
-// app/[shortCode]/loading.tsx
-// Next.js automatically renders this while the async page.tsx is running on the server.
-// It disappears the moment `redirect()` fires — giving users a polished moment
-// instead of a blank white screen.
 
 export default function RedirectLoading() {
   return (

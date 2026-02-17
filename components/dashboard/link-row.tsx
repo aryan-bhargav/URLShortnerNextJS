@@ -91,7 +91,7 @@ export default function LinkRow({ link }: { link: DashboardLink }) {
 
         {/* Short Link */}
         <a
-          href={`/api/redirect/${link.shortCode}`}
+          href={`/${link.shortCode}`}
           target="_blank"
           className="text-blue-400 hover:underline truncate font-mono"
         >
