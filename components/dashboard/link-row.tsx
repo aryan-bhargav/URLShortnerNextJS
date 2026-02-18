@@ -6,7 +6,9 @@ import OriginalUrlPopover from "./LinkRow/OriginalUrlPopover"
 import ShortLink from "./LinkRow/ShortLink"
 import StatusBadge from "./LinkRow/StatusBadge";
 import CopyButton from "./LinkRow/CopyButton";
-export default function LinkRow({ link }: { link: DashboardLink }) {
+
+
+export default function LinkRow({ link, triggerRefresh }: { link: DashboardLink; triggerRefresh: () => void; }) {
   const [copied, setCopied] = useState(false);
   const [urlCopied, setUrlCopied] = useState(false);
   const [origin, setOrigin] = useState("");
@@ -25,6 +27,24 @@ export default function LinkRow({ link }: { link: DashboardLink }) {
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
+
+  const handleToggle = async () => {
+    try {
+      const res = await fetch(`/api/urls/${link.id}/toggle`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ isActive: !link.isActive }),
+      });
+
+      if (!res.ok) throw new Error("Failed to update link");
+
+      triggerRefresh(); // ✅ refresh dashboard
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+
 
   const handleUrlCopy = async () => {
     await navigator.clipboard.writeText(link.originalUrl);
@@ -73,7 +93,7 @@ export default function LinkRow({ link }: { link: DashboardLink }) {
 
         {/* Status + Copy */}
         <div className="flex items-center justify-between md:justify-end gap-3">
-          <StatusBadge active={linkIsActive} />
+          <StatusBadge onClick={handleToggle} linkData={link} active={linkIsActive} />
           <CopyButton copied={copied} onClick={handleCopy} />
         </div>
 

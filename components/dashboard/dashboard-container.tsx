@@ -22,13 +22,14 @@ export default function DashboardContainer() {
     const [links, setLinks] = useState<DashboardLink[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string>("");
+    const [refreshKey, setRefreshKey] = useState(0);
 
     const fetchLinks = async () => {
         setLoading(true);
         setError("");
 
         try {
-            const res = await fetch("/api/urls", {cache: "no-store",});
+            const res = await fetch("/api/urls", { cache: "no-store", });
 
             if (!res.ok) throw new Error("Failed to load links");
 
@@ -44,7 +45,11 @@ export default function DashboardContainer() {
     // Fetch once on mount
     useEffect(() => {
         fetchLinks();
-    }, []);
+    }, [refreshKey]);
+
+    const triggerRefresh = () => {
+        setRefreshKey(prev => prev + 1);
+    };
 
     return (
         <div className="space-y-8 sm:space-y-9 md:space-y-10 lg:space-y-10 xl:space-y-12">
@@ -61,7 +66,7 @@ export default function DashboardContainer() {
 
             {/* Links Table Section */}
             <div className="w-full">
-                <LinksTable links={links} loading={loading} />
+                <LinksTable triggerRefresh={triggerRefresh} links={links} loading={loading} />
             </div>
         </div>
     );

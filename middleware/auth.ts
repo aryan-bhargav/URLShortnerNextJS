@@ -3,11 +3,16 @@ import type { NextRequest } from "next/server";
 import { verifyToken } from "@/lib/jwt";
 
 type AuthHandler = (
-  req: NextRequest & { userId?: string }
+  req: NextRequest & { userId?: string },
+  context: { params: any }
 ) => Promise<NextResponse>;
 
+
 export function auth(handler: AuthHandler) {
-  return async (req: NextRequest & { userId?: string }) => {
+  return async (
+    req: NextRequest,
+    context: { params: any }
+  ) => {
     try {
       const token = req.cookies.get("token")?.value;
 
@@ -19,9 +24,13 @@ export function auth(handler: AuthHandler) {
       }
 
       const decoded = verifyToken(token);
-      req.userId = decoded.userId;
 
-      return handler(req);
+      // Create a new typed request object
+      const authReq = Object.assign(req, {
+        userId: decoded.userId,
+      });
+
+      return handler(authReq, context);
     } catch (error) {
       return NextResponse.json(
         { message: "Invalid or expired token" },

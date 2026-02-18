@@ -4,7 +4,7 @@ import redis from "@/lib/redis";
 import { auth } from "@/middleware/auth";
 import { nanoid } from "nanoid";
 
-const CACHE_TTL = 30;
+const CACHE_TTL = 5;
 
 /* =========================
    GET: recent URLs

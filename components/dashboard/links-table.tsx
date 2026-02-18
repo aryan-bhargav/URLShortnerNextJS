@@ -5,9 +5,10 @@ import Skeleton from "@/components/ui/skeleton";
 interface LinksTableProps {
   links: DashboardLink[];
   loading: boolean;
+  triggerRefresh: () => void; // ✅ add this
 }
 
-export default function LinksTable({ links, loading }: LinksTableProps) {
+export default function LinksTable({ links, triggerRefresh, loading }: LinksTableProps) {
   if (loading) {
     return (
       <div className="glass rounded-xl p-6 space-y-4">
@@ -42,7 +43,7 @@ export default function LinksTable({ links, loading }: LinksTableProps) {
       {/* Rows */}
       <div className="divide-y divide-white/10">
         {links.map((link) => (
-          <LinkRow key={link.id} link={link} />
+          <LinkRow key={link.id} link={link} triggerRefresh={triggerRefresh} />
         ))}
       </div>
     </div>
