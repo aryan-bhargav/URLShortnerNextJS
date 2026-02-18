@@ -51,21 +51,21 @@ export default function CreateLinkForm({ onSuccess }: CreateLinkFormProps) {
   };
 
   return (
-    <div className="w-full">
+    <div className="w-ful h-full flex flex-col">
       {/* Glass card */}
-      <div className="relative rounded-2xl border border-white/10 bg-white/[0.04] backdrop-blur-xl shadow-[0_4px_32px_rgba(0,0,0,0.35)] overflow-hidden">
+      <div className="relative flex-1 flex flex-col rounded-2xl border border-white/10 bg-white/[0.04] backdrop-blur-xl shadow-[0_4px_32px_rgba(0,0,0,0.35)] overflow-hidden">
 
         {/* Top-edge accent line */}
-        <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-cyan-400/50 to-transparent" />
+        <div className="absolute top-0  left-0 right-0 h-px bg-gradient-to-r from-transparent via-cyan-400/50 to-transparent" />
 
         {/* Ambient glow blobs — hidden on smallest screens to save paint */}
         <div aria-hidden className="pointer-events-none absolute -top-16 -left-16 w-48 h-48 rounded-full bg-cyan-500/10 blur-3xl hidden sm:block" />
         <div aria-hidden className="pointer-events-none absolute -bottom-16 -right-16 w-48 h-48 rounded-full bg-blue-500/8 blur-3xl hidden sm:block" />
 
-        <div className="relative px-5 py-6 sm:px-7 sm:py-7 space-y-4">
+        <div className="relative flex-1 flex flex-col  px-5 py-6 sm:px-7 sm:py-7 space-y-4">
 
           {/* Header */}
-          <div className="flex items-center gap-2.5 mb-1">
+          <div className="flex items-center gap-2.5  mb-5">
             <span className="flex items-center justify-center w-7 h-7 rounded-lg bg-cyan-500/15 border border-cyan-400/20">
               <Link2 className="w-3.5 h-3.5 text-cyan-400" />
             </span>

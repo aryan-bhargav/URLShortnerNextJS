@@ -29,7 +29,7 @@ export default function StatsBar({ links }: StatsBarProps) {
      *  │  Links   │   Rate   │                │
      *  └──────────┴──────────┴────────────────┘
      */
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 xl:gap-4">
+    <div className="grid h-full grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 xl:gap-4">
 
       {/* Total Links */}
       <BentoCard accent="cyan" label="Total Links" value={totalLinks} sub="links created" icon={<GridIcon />} />
