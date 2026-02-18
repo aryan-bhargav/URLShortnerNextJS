@@ -30,9 +30,7 @@ export default function DashboardContainer() {
 
         try {
             const res = await fetch("/api/urls", { cache: "no-store", });
-
             if (!res.ok) throw new Error("Failed to load links");
-
             const data = await res.json();
             setLinks(data);
         } catch (err: any) {
@@ -55,11 +53,11 @@ export default function DashboardContainer() {
         <div className="space-y-8 sm:space-y-9 md:space-y-10 lg:space-y-10 xl:space-y-12">
             {/* Header Section: Form + Stats */}
             {/* Mobile: Stacked vertically | SM: Stacked | MD: Stacked | LG+: Side-by-side */}
-            <div className="flex flex-col gap-4 sm:gap-4 md:gap-4 lg:flex-row lg:gap-6 xl:gap-8">
-                <div className="flex-1">
+            <div className="flex flex-col gap-4 lg:flex-row lg:gap-6 xl:gap-8 items-stretch">
+                <div className="flex-1 h-full">
                     <CreateLinkForm onSuccess={fetchLinks} />
                 </div>
-                <div className="w-full lg:w-auto lg:flex-1">
+                <div className="w-full lg:w-auto lg:flex-1 h-full">
                     <StatsBar links={links} />
                 </div>
             </div>

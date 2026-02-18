@@ -62,7 +62,10 @@ export default function RootLayout({
     <html lang="en">
       <body className="antialiased">
         <Navbar />
-        <main>{children}</main>
+        <main>
+          <div className="h-10 md:h-5"></div>
+          {children}
+          </main>
       </body>
     </html>
   );
