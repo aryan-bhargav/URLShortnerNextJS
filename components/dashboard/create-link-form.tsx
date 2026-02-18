@@ -1,8 +1,8 @@
 'use client';
 
 import React, { useState } from 'react';
-import { AlertCircle, CheckCircle2, Clock, Hash, Link2, MousePointerClick, Power } from 'lucide-react';
-
+import { AlertCircle, CheckCircle2, Clock, Hash, Link2, Loader2, MousePointerClick, Power, Sparkles } from 'lucide-react';
+import AiSuggestionBadge from '../AiSuggestionBadge';
 interface CreateLinkFormProps {
   onSuccess: () => void;
 }
@@ -16,6 +16,34 @@ export default function CreateLinkForm({ onSuccess }: CreateLinkFormProps) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState(false);
+  const [aiSuggestions, setAiSuggestions] = useState<string[]>([]);
+  const [aiLoading, setAiLoading] = useState<boolean>(false);
+
+  const handleAiSuggest = async () => {
+    if (!originalUrl) {
+      setError("Enter original URL first");
+      return;
+    }
+
+    setAiLoading(true);
+    setError("");
+
+    try {
+      const res = await fetch("/api/aishortcode", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ url: originalUrl })
+      })
+
+      if (!res.ok) throw new Error("AI failed");
+      const data = await res.json();
+
+      setShortCode(data.suggestedCode);
+      setAiSuggestions(data.alternativeCodes || []);
+    } catch (err: any) {
+      setError("AI Suggestion failed");
+    } finally { setAiLoading(false); }
+  }
 
   const handleSubmit = async () => {
     if (!originalUrl) { setError('Original URL is required'); return; }
@@ -39,7 +67,7 @@ export default function CreateLinkForm({ onSuccess }: CreateLinkFormProps) {
       }
 
       setOriginalUrl(''); setShortCode(''); setExpiresAt('');
-      setMaxClicks(''); setIsActive(true);
+      setMaxClicks(''); setIsActive(true); setAiSuggestions([]);
       setSuccess(true);
       setTimeout(() => setSuccess(false), 3000);
       onSuccess();
@@ -89,11 +117,21 @@ export default function CreateLinkForm({ onSuccess }: CreateLinkFormProps) {
               <input
                 type="text"
                 placeholder="Custom code (optional)"
-                className="field-input"
+                className="field-input pr-8"
                 value={shortCode}
                 onChange={(e) => setShortCode(e.target.value)}
               />
+
+              <button type='button' onClick={handleAiSuggest} className='absolute right-3 top-1/2 -translate-y-1/2 text-cyan-400 hover:text-cyan-300 transition'>
+                {aiLoading ? (
+                  <Loader2 className="w-5 h-5 animate-spin" />
+                ) : (
+                  <Sparkles className="w-5 h-5" />
+                )}
+              </button>
             </Field>
+
+
 
             <Field icon={<MousePointerClick className="w-3.5 h-3.5" />} accent="green">
               <input
@@ -105,6 +143,15 @@ export default function CreateLinkForm({ onSuccess }: CreateLinkFormProps) {
                 onChange={(e) => setMaxClicks(e.target.value)}
               />
             </Field>
+
+            {aiSuggestions.length > 0 && (
+              <div className="flex flex-wrap gap-2">
+                {aiSuggestions.map((code, idx) => (
+                  <AiSuggestionBadge key={idx} code={code} onClick={setShortCode} />
+                ))}
+              </div>
+            )}
+
           </div>
 
           {/* ── Expiry + toggle in one row ── */}
@@ -206,23 +253,23 @@ export default function CreateLinkForm({ onSuccess }: CreateLinkFormProps) {
 type Accent = 'cyan' | 'amber' | 'blue' | 'green';
 
 const accentFocus: Record<Accent, string> = {
-  cyan:  'focus-within:border-cyan-400/40  focus-within:bg-cyan-400/[0.04]  focus-within:shadow-[0_0_0_3px_rgba(34,211,238,0.07)]',
+  cyan: 'focus-within:border-cyan-400/40  focus-within:bg-cyan-400/[0.04]  focus-within:shadow-[0_0_0_3px_rgba(34,211,238,0.07)]',
   amber: 'focus-within:border-amber-400/40 focus-within:bg-amber-400/[0.04] focus-within:shadow-[0_0_0_3px_rgba(251,191,36,0.07)]',
-  blue:  'focus-within:border-blue-400/40  focus-within:bg-blue-400/[0.04]  focus-within:shadow-[0_0_0_3px_rgba(96,165,250,0.07)]',
+  blue: 'focus-within:border-blue-400/40  focus-within:bg-blue-400/[0.04]  focus-within:shadow-[0_0_0_3px_rgba(96,165,250,0.07)]',
   green: 'focus-within:border-green-400/40 focus-within:bg-green-400/[0.04] focus-within:shadow-[0_0_0_3px_rgba(74,222,128,0.07)]',
 };
 
 const accentIcon: Record<Accent, string> = {
-  cyan:  'text-cyan-400/60',
+  cyan: 'text-cyan-400/60',
   amber: 'text-amber-400/60',
-  blue:  'text-blue-400/60',
+  blue: 'text-blue-400/60',
   green: 'text-green-400/60',
 };
 
 function Field({ icon, accent, children }: { icon: React.ReactNode; accent: Accent; children: React.ReactNode }) {
   return (
     <div className={`
-      flex items-center gap-2.5 px-3.5 py-2.5
+      relative flex items-center gap-2.5 px-3.5 py-2.5
       rounded-xl border border-white/10 bg-white/[0.04]
       transition-all duration-150
       ${accentFocus[accent]}
